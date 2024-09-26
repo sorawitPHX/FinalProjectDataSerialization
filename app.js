@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const expressLayouts = require('express-ejs-layouts');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,6 +19,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Use express-ejs-layouts
+app.use(expressLayouts);
+// Set default layout file (main.ejs)
+app.set('layout', 'layout/main'); // บอกให้ใช้ layout หลัก
 
 // Bootstrap
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
