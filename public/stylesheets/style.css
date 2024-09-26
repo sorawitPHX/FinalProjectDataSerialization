@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+.page-header {
+  background-size: cover;
+  background-position: center;
+  height: 70vh; /* You can adjust this as needed */
+}
