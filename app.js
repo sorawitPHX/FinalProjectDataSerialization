@@ -9,6 +9,8 @@ const createError = require('http-errors');
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const aboutmeRoute = require('./routes/aboutme'); // ตรวจสอบให้แน่ใจว่าไฟล์นี้มีอยู่
+
 
 const app = express();
 
@@ -45,6 +47,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/login', loginRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/aboutme', aboutmeRoute); // เปลี่ยนเส้นทางตามที่ต้องการ
+
 
 // Catch 404
 app.use((req, res, next) => {
