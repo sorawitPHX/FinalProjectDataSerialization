@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Ngamnij Arch-int' });
+  res.render('index', { title: 'Ngamnij Arch-int', activePage: 'index' });
 });
 
 module.exports = router;
