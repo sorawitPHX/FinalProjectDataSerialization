@@ -10,6 +10,7 @@ const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const aboutmeRoute = require('./routes/aboutme'); // ตรวจสอบให้แน่ใจว่าไฟล์นี้มีอยู่
+const projectRouter = require('./routes/project');
 
 
 const app = express();
@@ -48,6 +49,7 @@ app.use('/login', loginRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/aboutme', aboutmeRoute); // เปลี่ยนเส้นทางตามที่ต้องการ
+app.use('/project', projectRouter)
 
 
 // Catch 404
