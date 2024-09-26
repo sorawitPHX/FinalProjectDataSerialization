@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <!-- Bootstrap CDN xxx-->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
 </head>
@@ -20,24 +22,26 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <!-- เมนูภาษาไทย -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">หน้าหลัก</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">งานวิจัยและโครงงาน</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">เกี่ยวกับเรา</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">ติดต่อ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">เข้าสู่ระบบ</a>
-                    </li>
-                </ul>
+                <div class="ms-auto">
+                    <ul class="navbar-nav">
+                        <!-- เมนูภาษาไทย -->
+                        <li class="nav-item ms-2">
+                            <a class="nav-link" href="#">หน้าหลัก</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="nav-link" href="#">งานวิจัยและโครงงาน</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="nav-link" href="#">เกี่ยวกับเรา</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="nav-link" href="#">ติดต่อ</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="btn btn-primary" href="#">เข้าสู่ระบบ</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
@@ -50,7 +54,7 @@
 
     <div class="container">
         <footer>
-          <p>© 2024 Ngamnij Arch-int. All rights reserved.</p>
+            <p>© 2024 Ngamnij Arch-int. All rights reserved.</p>
         </footer>
     </div>
 
