@@ -6,6 +6,9 @@ const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
+const connectDB = require('./db');
+
+// Router
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -14,6 +17,9 @@ const projectRouter = require('./routes/project');
 
 
 const app = express();
+
+// Connect MongoDB
+connectDB();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
