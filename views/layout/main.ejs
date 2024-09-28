@@ -4,23 +4,27 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        <%= title %>
-    </title>
-    <!-- Bootstrap CDN xxx-->
+    <title><%= title %></title>
+    <!-- Bootstrap CDN -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <!-- Fixed Top Navbar?? -->
-    <header id="header" class="header d-flex align-items-center fixed-top sticked"></header>
+    <!-- Fixed Top Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary shadow-sm">
         <div class="container">
+            <!-- แสดงวันที่เข้าชม -->
+            <div class="date-bar-left">
+                <span class="topbar-date" id="current-date"></span>
+            </div>
+            <!-- ชื่อเว็บไซต์ -->
             <a class="navbar-brand" href="#">Ngamnij Arch-int</a>
+            <!-- ปุ่มสำหรับแสดงเมนูเมื่อเป็นหน้าจอขนาดเล็ก -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- เมนูใน Navbar -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="ms-auto">
                     <ul class="navbar-nav">
@@ -29,34 +33,43 @@
                             <a class="nav-link <%= activePage === 'index' ? 'active' : '' %>" href="/">หน้าหลัก</a>
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="nav-link <%= activePage === 'project' ? 'active' : '' %>"
-                                href="/project">งานวิจัยและโครงงาน</a>
+                            <a class="nav-link <%= activePage === 'project' ? 'active' : '' %>" href="/project">งานวิจัยและโครงงาน</a>
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="nav-link <%= activePage === 'aboutme' ? 'active' : '' %>"
-                                href="/aboutme">เกี่ยวกับเรา</a>
+                            <a class="nav-link <%= activePage === 'aboutme' ? 'active' : '' %>" href="/aboutme">เกี่ยวกับเรา</a>
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="btn btn-primary <%= activePage === 'login' ? 'active' : '' %>"
-                                href="#">เข้าสู่ระบบ</a>
+                            <a class="btn btn-primary <%= activePage === 'login' ? 'active' : '' %>" href="#">เข้าสู่ระบบ</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
-    </header>
 
-    <!-- Content to test scrolling -->
+    <!-- เนื้อหาของเว็บไซต์ -->
     <div class="container" style="margin-top: 100px;">
         <%- body %>
     </div>
 
+    <!-- Footer -->
     <div class="container">
         <footer>
             <p>© 2024 Ngamnij Arch-int. All rights reserved.</p>
         </footer>
     </div>
+
+    <!-- JavaScript to display current date -->
+    <script>
+        // Function to get current date in format "Day, Month Date, Year"
+        function formatDate(date) {
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Get current date and display it
+        document.getElementById('current-date').textContent = formatDate(new Date());
+    </script>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
