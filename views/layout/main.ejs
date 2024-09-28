@@ -7,28 +7,44 @@
     <title><%= title %></title>
     <!-- Bootstrap CDN -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Fixed Top Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg bg-dark navbar-dark shadow-sm">
         <div class="container">
-            <!-- แสดงวันที่เข้าชม -->
             <div class="date-bar-left">
                 <span class="topbar-date text-white" id="current-date"></span>
             </div>
-            <!-- ชื่อเว็บไซต์ -->
             <a class="navbar-brand text-uppercase fw-bold" href="#">Ngamnij Arch-int</a>
-            <!-- ปุ่มสำหรับแสดงเมนูเมื่อเป็นหน้าจอขนาดเล็ก -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- เมนูใน Navbar -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="ms-auto">
                     <ul class="navbar-nav">
-                        <!-- เมนูภาษาไทย -->
                         <li class="nav-item ms-4">
                             <a class="nav-link <%= activePage === 'index' ? 'active' : '' %> text-white" href="/">หน้าหลัก</a>
                         </li>
@@ -53,21 +69,19 @@
     </div>
 
     <!-- Footer -->
-    <div class="container">
-        <footer>
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container text-center">
             <p>© 2024 Ngamnij Arch-int. All rights reserved.</p>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <!-- JavaScript to display current date -->
     <script>
-        // Function to get current date in format "Day, Month Date, Year"
         function formatDate(date) {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             return date.toLocaleDateString('th-TH', options);
         }
 
-        // Get current date and display it
         document.getElementById('current-date').textContent = formatDate(new Date());
     </script>
 
