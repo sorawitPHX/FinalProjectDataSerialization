@@ -26,12 +26,10 @@
 
 <body>
     <!-- Fixed Top Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg bg-dark navbar-dark shadow-sm">
+    <nav class="navbar fixed-top navbar-expand-lg ">
         <div class="container">
-            <div class="date-bar-left">
-                <span class="topbar-date text-white" id="current-date"></span>
-            </div>
-            <a class="navbar-brand text-uppercase fw-bold" href="/">Ngamnij Arch-int</a>
+            
+            <a class="navbar-brand text-uppercase fw-bold" href="#">Ngamnij Arch-int</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,16 +39,16 @@
                     <ul class="navbar-nav">
                         <!-- เมนูภาษาไทย -->
                         <li class="nav-item ms-4">
-                            <a class="nav-link <%= activePage == 'index' ? 'active' : '' %> text-white" href="/">หน้าหลัก</a>
+                            <a class="nav-link <%= activePage == 'index' ? 'active' : '' %> " href="/">หน้าหลัก</a>
                         </li>
                         <li class="nav-item ms-4">
-                            <a class="nav-link <%= activePage == 'project' ? 'active' : '' %> text-white" href="/project">งานวิจัยและโครงงาน</a>
+                            <a class="nav-link <%= activePage == 'project' ? 'active' : '' %> " href="/project">งานวิจัยและโครงงาน</a>
                         </li>
                         <li class="nav-item ms-4">
-                            <a class="nav-link <%= activePage == 'aboutme' ? 'active' : '' %> text-white" href="/aboutme">เกี่ยวกับเรา</a>
+                            <a class="nav-link <%= activePage == 'aboutme' ? 'active' : '' %> " href="/aboutme">เกี่ยวกับเรา</a>
                         </li>
                         <li class="nav-item ms-4">
-                            <a class="btn btn-outline-light <%= activePage === 'login' ? 'active' : '' %>" href="#">เข้าสู่ระบบ</a>
+                            <a id="login" class="btn btn-outline-dark<%= activePage === 'login' ? 'active' : '' %>" href="#">เข้าสู่ระบบ</a>
                         </li>
                     </ul>
                 </div>
@@ -108,16 +106,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script>
-        // document.addEventListener('scroll', ()=>{
-        //     let navbar = document.getElementsByClassName('navbar')[0]
-        //     if(window.screenY>0) {
-        //         navbar.setAttribute('data-bs-theme', 'dark')
-        //         navbar.classList.add('bg-dark')
-        //     }else {
-        //         navbar.setAttribute('data-bs-theme', null)
-        //         navbar.classList.remove('bg-dark')
-        //     }
-        // })
+        document.addEventListener('scroll', ()=>{
+            console.log(window.scrollY);
+            let navbar = document.getElementsByClassName('navbar')[0]
+            let login_btn = document.getElementById('login')
+            if(window.scrollY>56) {
+                navbar.setAttribute('data-bs-theme', 'dark')
+                navbar.classList.add('bg-dark')
+                login_btn.classList.remove('btn-outline-dark')
+                login_btn.classList.add('btn-outline-light')
+            }else {
+                navbar.setAttribute('data-bs-theme', null)
+                navbar.classList.remove('bg-dark')
+                login_btn.classList.remove('btn-outline-light')
+                login_btn.classList.add('btn-outline-dark')
+            }
+        })
     </script>
 </body>
 </html>
