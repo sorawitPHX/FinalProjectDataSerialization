@@ -8,24 +8,17 @@
     <!-- Bootstrap CDN -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <style>
-        html, body {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+        /* เพิ่มสไตล์สำหรับลิงก์ที่ active */
+        .navbar-nav .nav-link.active {
+            border-bottom: 3px solid #008cff; /* เส้นขีดสีขาวใต้ลิงก์ที่ active */
         }
-
-        body {
-            margin: 0;
+        /* CSS สำหรับเอฟเฟกต์เฟด */
+        .fade-page {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out; /* ระยะเวลา 0.5 วินาที */
         }
-
-        .container {
-            flex: 1;
-        }
-
-        .footer {
-            position: relative;
-            bottom: 0;
-            width: 100%;
+        .fade-page.show {
+            opacity: 1;
         }
     </style>
 </head>
@@ -45,6 +38,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="ms-auto">
                     <ul class="navbar-nav">
+                        <!-- เมนูภาษาไทย -->
                         <li class="nav-item ms-4">
                             <a class="nav-link <%= activePage === 'index' ? 'active' : '' %> text-white" href="/">หน้าหลัก</a>
                         </li>
@@ -83,6 +77,28 @@
         }
 
         document.getElementById('current-date').textContent = formatDate(new Date());
+
+        // เพิ่มเอฟเฟกต์เฟดเข้าเมื่อโหลดหน้า
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.add('show');
+        });
+
+        // ฟังก์ชันสำหรับการหน่วงเวลาและเปลี่ยนหน้า
+        const links = document.querySelectorAll('a.nav-link, a.btn'); // เลือกทุกลิงก์
+        links.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault(); // ป้องกันการนำทางทันที
+                const href = this.href; // เก็บลิงก์ปลายทาง
+
+                // เริ่มเฟดออก
+                document.body.classList.remove('show');
+
+                // หน่วงเวลา 500ms แล้วเปลี่ยนหน้า
+                setTimeout(function () {
+                    window.location.href = href; // นำทางไปยังหน้าปลายทาง
+                }, 150); // ระยะเวลาเฟดออก 0.5 วินาที
+            });
+        });
     </script>
 
     <!-- Bootstrap JS and dependencies -->
