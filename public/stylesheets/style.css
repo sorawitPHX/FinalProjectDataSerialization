@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+}
+
 .breadcrumbs {
   background: #000;
 }
@@ -7,4 +11,16 @@
   background-color: #0e1d34;
   padding: 50px 0;
   color: white;
+}
+
+.content {
+  min-height: 90vh;
+}
+
+.table-title {
+  background-color: #435d7d;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0 !important;
 }

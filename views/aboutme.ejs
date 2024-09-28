@@ -1,53 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title><%= title %></title> -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/stylesheets/style.css">
-</head>
-<body>
+<header class="bg-primary text-white text-center py-5">
+    <h1 class="display-4">About Me</h1>
+    <p class="lead">Welcome to my personal blog</p>
+</header>
 
-    <header class="bg-primary text-white text-center py-5">
-        <h1 class="display-4">About Me</h1>
-        <p class="lead">Welcome to my personal blog</p>
-    </header>
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>My Story</h2>
-                <p id="storyText"><%= content %></p>
-                <button class="btn btn-warning" id="editButton">Edit</button>
-            </div>
-            <div class="col-md-6">
-                <img src="/public/img/bg_web.png (1920×750).jpg"  width="500" alt="Profile Picture" class="img-fluid rounded-circle">
-            </div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>My Story</h2>
+            <p id="storyText">
+                <%= content %>
+            </p>
+            <button class="btn btn-warning" id="editButton">Edit</button>
         </div>
-
-        <div class="mt-5" id="editForm" style="display:none;">
-            <h2>Edit My Story</h2>
-            <form action="/aboutme/update" method="POST">
-                <div class="form-group">
-                    <textarea class="form-control" name="story" rows="5"></textarea>
-                </div>
-                <button type="submit" class="btn btn-success">Update</button>
-            </form>
+        <div class="col-md-6">
+            <img src="/public/img/bg_web.png (1920×750).jpg" width="500" alt="Profile Picture"
+                class="img-fluid rounded-circle">
         </div>
-
-        <footer class="bg-dark text-white text-center py-3 mt-5">
-            <p>&copy; 2024 Your Name. All Rights Reserved.</p>
-        </footer>
-
-        <script src="/js/bootstrap.bundle.min.js"></script>
-        <script>
-            document.getElementById('editButton').onclick = function() {
-                document.getElementById('editForm').style.display = 'block';
-                document.getElementById('storyText').style.display = 'none';
-                this.style.display = 'none';
-            }
-        </script>
     </div>
-</body>
-</html>
+
+    <div class="mt-5" id="editForm" style="display:none;">
+        <h2>Edit My Story</h2>
+        <form action="/aboutme/update" method="POST">
+            <div class="form-group">
+                <textarea class="form-control" name="story" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Update</button>
+        </form>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('editButton').onclick = function () {
+            document.getElementById('editForm').style.display = 'block';
+            document.getElementById('storyText').style.display = 'none';
+            this.style.display = 'none';
+        }
+    </script>
+</div>
