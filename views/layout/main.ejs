@@ -11,14 +11,14 @@
 
 <body>
     <!-- Fixed Top Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary shadow-sm">
+    <nav class="navbar fixed-top navbar-expand-lg bg-dark navbar-dark shadow-sm">
         <div class="container">
             <!-- แสดงวันที่เข้าชม -->
             <div class="date-bar-left">
-                <span class="topbar-date" id="current-date"></span>
+                <span class="topbar-date text-white" id="current-date"></span>
             </div>
             <!-- ชื่อเว็บไซต์ -->
-            <a class="navbar-brand" href="#">Ngamnij Arch-int</a>
+            <a class="navbar-brand text-uppercase fw-bold" href="#">Ngamnij Arch-int</a>
             <!-- ปุ่มสำหรับแสดงเมนูเมื่อเป็นหน้าจอขนาดเล็ก -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,17 +29,17 @@
                 <div class="ms-auto">
                     <ul class="navbar-nav">
                         <!-- เมนูภาษาไทย -->
-                        <li class="nav-item ms-2">
-                            <a class="nav-link <%= activePage === 'index' ? 'active' : '' %>" href="/">หน้าหลัก</a>
+                        <li class="nav-item ms-4">
+                            <a class="nav-link <%= activePage === 'index' ? 'active' : '' %> text-white" href="/">หน้าหลัก</a>
                         </li>
-                        <li class="nav-item ms-2">
-                            <a class="nav-link <%= activePage === 'project' ? 'active' : '' %>" href="/project">งานวิจัยและโครงงาน</a>
+                        <li class="nav-item ms-4">
+                            <a class="nav-link <%= activePage === 'project' ? 'active' : '' %> text-white" href="/project">งานวิจัยและโครงงาน</a>
                         </li>
-                        <li class="nav-item ms-2">
-                            <a class="nav-link <%= activePage === 'aboutme' ? 'active' : '' %>" href="/aboutme">เกี่ยวกับเรา</a>
+                        <li class="nav-item ms-4">
+                            <a class="nav-link <%= activePage === 'aboutme' ? 'active' : '' %> text-white" href="/aboutme">เกี่ยวกับเรา</a>
                         </li>
-                        <li class="nav-item ms-2">
-                            <a class="btn btn-primary <%= activePage === 'login' ? 'active' : '' %>" href="#">เข้าสู่ระบบ</a>
+                        <li class="nav-item ms-4">
+                            <a class="btn btn-outline-light <%= activePage === 'login' ? 'active' : '' %>" href="#">เข้าสู่ระบบ</a>
                         </li>
                     </ul>
                 </div>
@@ -63,8 +63,8 @@
     <script>
         // Function to get current date in format "Day, Month Date, Year"
         function formatDate(date) {
-            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-            return date.toLocaleDateString('en-US', options);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('th-TH', options);
         }
 
         // Get current date and display it
