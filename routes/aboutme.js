@@ -6,6 +6,7 @@ let storyContent = "This is เกี่ยวกับฉัน";
 
 // เส้นทางสำหรับหน้า About
 router.get('/', (req, res) => {
+    
     res.render('aboutme', { title: 'เกี่ยวกับฉัน', content: storyContent, activePage: 'aboutme' });
 });
 
