@@ -7,6 +7,7 @@
     <title><%= title %></title>
     <!-- Bootstrap CDN -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/stylesheets/style.css" rel="stylesheet" />
     <style>
         /* เพิ่มสไตล์สำหรับลิงก์ที่ active */
         .navbar-nav .nav-link.active {
@@ -40,13 +41,13 @@
                     <ul class="navbar-nav">
                         <!-- เมนูภาษาไทย -->
                         <li class="nav-item ms-4">
-                            <a class="nav-link <%= activePage === 'index' ? 'active' : '' %> text-white" href="/">หน้าหลัก</a>
+                            <a class="nav-link <%= activePage == 'index' ? 'active' : '' %> text-white" href="/">หน้าหลัก</a>
                         </li>
                         <li class="nav-item ms-4">
-                            <a class="nav-link <%= activePage === 'project' ? 'active' : '' %> text-white" href="/project">งานวิจัยและโครงงาน</a>
+                            <a class="nav-link <%= activePage == 'project' ? 'active' : '' %> text-white" href="/project">งานวิจัยและโครงงาน</a>
                         </li>
                         <li class="nav-item ms-4">
-                            <a class="nav-link <%= activePage === 'aboutme' ? 'active' : '' %> text-white" href="/aboutme">เกี่ยวกับเรา</a>
+                            <a class="nav-link <%= activePage == 'aboutme' ? 'active' : '' %> text-white" href="/aboutme">เกี่ยวกับเรา</a>
                         </li>
                         <li class="nav-item ms-4">
                             <a class="btn btn-outline-light <%= activePage === 'login' ? 'active' : '' %>" href="#">เข้าสู่ระบบ</a>
@@ -57,20 +58,13 @@
         </div>
     </nav>
 
-    <!-- เนื้อหาของเว็บไซต์ -->
-    <div class="container" style="margin-top: 100px;">
+    <!-- Content to test scrolling -->
+    <div class="content">
         <%- body %>
     </div>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-dark text-white">
-        <div class="container">
-            <div class="date-bar-left">
-                <span class="topbar-date text-white" id="current-date"></span>
-                <span class="ms-3 text-white" id="visitor-count">visitors: 0</span> <!-- จำนวนผู้เข้าชม -->
-            </div>
-        </div>
-        
+    <footer class="footer mt-5 py-3 bg-dark text-white">
         <div class="container text-center">
             <p>© 2024 Ngamnij Arch-int. All rights reserved.</p>
         </div>
@@ -113,6 +107,17 @@
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // document.addEventListener('scroll', ()=>{
+        //     let navbar = document.getElementsByClassName('navbar')[0]
+        //     if(window.screenY>0) {
+        //         navbar.setAttribute('data-bs-theme', 'dark')
+        //         navbar.classList.add('bg-dark')
+        //     }else {
+        //         navbar.setAttribute('data-bs-theme', null)
+        //         navbar.classList.remove('bg-dark')
+        //     }
+        // })
+    </script>
 </body>
-
 </html>
