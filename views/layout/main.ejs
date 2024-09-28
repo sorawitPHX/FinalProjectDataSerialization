@@ -15,7 +15,7 @@
         /* CSS สำหรับเอฟเฟกต์เฟด */
         .fade-page {
             opacity: 0;
-            transition: opacity 0.5s ease-in-out; /* ระยะเวลา 0.5 วินาที */
+            transition: opacity 0.15s ease-in-out; /* ระยะเวลา 0.15 วินาที */
         }
         .fade-page.show {
             opacity: 1;
@@ -64,10 +64,18 @@
 
     <!-- Footer -->
     <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container">
+            <div class="date-bar-left">
+                <span class="topbar-date text-white" id="current-date"></span>
+                <span class="ms-3 text-white" id="visitor-count">visitors: 0</span> <!-- จำนวนผู้เข้าชม -->
+            </div>
+        </div>
+        
         <div class="container text-center">
             <p>© 2024 Ngamnij Arch-int. All rights reserved.</p>
         </div>
     </footer>
+    
 
     <!-- JavaScript to display current date -->
     <script>
@@ -99,6 +107,7 @@
                 }, 150); // ระยะเวลาเฟดออก 0.5 วินาที
             });
         });
+
     </script>
 
     <!-- Bootstrap JS and dependencies -->
