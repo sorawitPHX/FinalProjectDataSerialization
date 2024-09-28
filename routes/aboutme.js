@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 // ตัวอย่างข้อมูลเริ่มต้น
-let storyContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+let storyContent = "This is เกี่ยวกับฉัน";
 
 // เส้นทางสำหรับหน้า About
 router.get('/', (req, res) => {
-    res.render('aboutme', { title: 'About Me', story: storyContent });
+    res.render('aboutme', { title: 'เกี่ยวกับฉัน', content: storyContent, activePage: 'aboutme' });
 });
 
 // เส้นทางสำหรับการอัปเดตข้อมูล
