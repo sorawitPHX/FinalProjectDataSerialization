@@ -63,7 +63,8 @@ app.use('/insertNews', insertNews)
 
 // Catch 404
 app.use((req, res, next) => {
-  next(createError(404));
+  // next(createError(404));
+  res.render('404')
 });
 
 // Error handler
