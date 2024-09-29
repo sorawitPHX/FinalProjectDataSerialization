@@ -1,4 +1,4 @@
-
+// models/User.js
 const mongoose = require('mongoose');
 
 // สร้าง Schema สำหรับข้อมูล
@@ -6,7 +6,6 @@ const projectSchema = new mongoose.Schema({
     project_name: {
         type: String,
         required: true,
-        unique: true,
     },
     project_img_path: {
         type: String
@@ -16,10 +15,14 @@ const projectSchema = new mongoose.Schema({
     },
     project_link: {
         type: String
+    },
+    added_user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, {timestamps: true});
 
 // สร้าง Model
-const User = mongoose.model('Project', projectSchema);
+const Project = mongoose.model('Project', projectSchema);
 
 module.exports = Project;

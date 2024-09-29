@@ -7,6 +7,7 @@
     <title><%= title %></title>
     <!-- Bootstrap CDN -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="/stylesheets/style.css" rel="stylesheet" />
     <style>
         /* เพิ่มสไตล์สำหรับลิงก์ที่ active */
@@ -109,7 +110,7 @@
             console.log(window.scrollY);
             let navbar = document.getElementsByClassName('navbar')[0]
             let login_btn = document.getElementById('login')
-            if(window.scrollY>56) {
+            if(window.scrollY>0) {
                 navbar.setAttribute('data-bs-theme', 'dark')
                 navbar.classList.add('bg-dark')
                 login_btn.classList.remove('btn-outline-dark')

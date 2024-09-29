@@ -13,7 +13,7 @@ const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const aboutmeRoute = require('./routes/aboutme'); // ตรวจสอบให้แน่ใจว่าไฟล์นี้มีอยู่
-const projectRouter = require('./routes/project');
+const projectRouter = require('./routes/projects');
 const insertNews = require('./routes/insertNews');
 
 
@@ -38,6 +38,7 @@ app.use(expressLayouts);
 app.set('layout', 'layout/main'); // บอกให้ใช้ layout หลัก
 
 // Bootstrap
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/font')));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 

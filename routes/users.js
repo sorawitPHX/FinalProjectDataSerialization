@@ -11,14 +11,15 @@ router.get('/insert', async function (req, res, next) {
   const sampleUserData = {
     email: "john.doe" + Math.floor(Math.random() * 100) + "@example.com",
     password: "hashedpassword123", // ในการใช้งานจริงควรใช้การเข้ารหัส password ด้วย bcrypt
-    prefix_th: "นาย",
-    firstname_th: "จอห์น",
-    lastname_th: "โด",
+    prefix_th: "รศ.ดร.",
+    firstname_th: "งามนิจ",
+    lastname_th: "อาจอินทร์",
     description_th: "ผู้เชี่ยวชาญด้านซอฟต์แวร์และระบบสารสนเทศ",
-    prefix_en: "Mr.",
-    firstname_en: "John",
-    lastname_en: "Doe",
+    prefix_en: "Assoc. Prof. Dr.",
+    firstname_en: "Ngamnit",
+    lastname_en: "Atjin",
     description_en: "Software and Information Systems Expert",
+    role: 'super admin',
     rewards: [
       "Best Paper Award at IMECS 2019",
       "Excellence in Research Award 2021"
