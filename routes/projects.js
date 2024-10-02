@@ -39,10 +39,31 @@ function checkFileType(file, cb) {
 
 // เส้นทางสำหรับหน้า About
 router.get('/', async (req, res) => {
-    const status = req.query.status;
-    const msg = req.query.msg;
-    let projects = await Project.find({})
-    res.render('project', { title: 'งานวิจัยและโครงงาน', activePage: 'project', projects, status, msg });
+    try {
+        const search = req.query.search || ''
+        const status = req.query.status;
+
+        const searchOptions = search
+            ? {
+                $or: [
+                    { project_name: { $regex: search, $options: 'i' } },
+                    { project_desc: { $regex: search, $options: 'i' } }
+                ]
+            } // ใช้ regex ค้นหาที่ชื่อโปรเจค
+            : {};
+
+        const msg = req.query.msg;
+        const limit = parseInt(req.query.limit) || 12
+        const page = parseInt(req.query.page) || 1
+        const skip = (page - 1) * limit
+        const projectCount = await Project.countDocuments(searchOptions)
+        const totalPage = Math.ceil(projectCount / limit)
+        let projects = await Project.find(searchOptions).skip(skip).limit(limit)
+        res.render('project', { title: 'งานวิจัยและโครงงาน', activePage: 'project', projects, status, msg, projectCount, totalPage, page, limit, search });
+    } catch (error) {
+        res.send({ error })
+        console.log(error)
+    }
 });
 
 // เส้นทางสำหรับการอัปเดตข้อมูล
@@ -61,26 +82,30 @@ router.post('/insert', async (req, res) => {
         if (err) {
             res.status(400).send({ err })
         } else {
+            let path = ''
             if (req.file == undefined) {
+                path = `img/no_image.jpg`
                 // res.status(400).send({ msg: 'No file uploaded' })
-                let [res_status, res_msg] = ['error', 'No file uploaded']
-                res.redirect(`/project?status=${res_status}&msg=${res_msg}`)
+
+                // let [res_status, res_msg] = ['error', 'No file uploaded']
+                // res.redirect(`/project?status=${res_status}&msg=${res_msg}`)
             } else {
-                let newProject = new Project({
-                    project_name: req.body.project_name,
-                    project_desc: req.body.project_desc,
-                    project_link: req.body.project_link,
-                    project_img_path: `uploads/${req.file.filename}`,
-                    added_user: userId  // userId ต้องเป็น _id ของ User ที่ทำการ insert
-                })
-                newProject.save().then(() => {
-                    let [res_status, res_msg] = ['success', 'Inserted New Project']
-                    res.redirect(`/project?status=${res_status}&msg=${res_msg}`)
-                }).catch((err) => {
-                    let [res_status, res_msg] = ['error', err]
-                    res.redirect(`/project?status=${res_status}&msg=${res_msg}`)
-                })
+                path = `uploads/${req.file.filename}`
             }
+            let newProject = new Project({
+                project_name: req.body.project_name,
+                project_desc: req.body.project_desc,
+                project_link: req.body.project_link,
+                project_img_path: path,
+                added_user: userId  // userId ต้องเป็น _id ของ User ที่ทำการ insert
+            })
+            newProject.save().then(() => {
+                let [res_status, res_msg] = ['success', 'Inserted New Project']
+                res.redirect(`/project?status=${res_status}&msg=${res_msg}`)
+            }).catch((err) => {
+                let [res_status, res_msg] = ['error', err]
+                res.redirect(`/project?status=${res_status}&msg=${res_msg}`)
+            })
         }
     })
 })
