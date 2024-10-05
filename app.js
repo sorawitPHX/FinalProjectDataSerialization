@@ -14,6 +14,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const aboutmeRoute = require('./routes/aboutme');
 const projectRouter = require('./routes/projects');
+const searchScoreRouter = require('./routes/searchScore');
 const insertNews = require('./routes/insertNews');
 
 
@@ -59,6 +60,7 @@ app.use('/users', usersRouter);
 app.use('/aboutme', aboutmeRoute);
 app.use('/project', projectRouter)
 app.use('/insertNews', insertNews)
+app.use('/searchScore', searchScoreRouter)
 
 
 // Catch 404
