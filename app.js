@@ -12,7 +12,7 @@ const connectDB = require('./db');
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const aboutmeRoute = require('./routes/aboutme'); // ตรวจสอบให้แน่ใจว่าไฟล์นี้มีอยู่
+const aboutmeRoute = require('./routes/aboutme');
 const projectRouter = require('./routes/projects');
 const insertNews = require('./routes/insertNews');
 
@@ -56,7 +56,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/login', loginRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/aboutme', aboutmeRoute); // เปลี่ยนเส้นทางตามที่ต้องการ
+app.use('/aboutme', aboutmeRoute);
 app.use('/project', projectRouter)
 app.use('/insertNews', insertNews)
 
