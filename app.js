@@ -6,14 +6,22 @@ const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
+const connectDB = require('./db');
+
+// Router
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const aboutmeRoute = require('./routes/aboutme'); // ตรวจสอบให้แน่ใจว่าไฟล์นี้มีอยู่
-const projectRouter = require('./routes/project');
+const aboutmeRoute = require('./routes/aboutme');
+const projectRouter = require('./routes/projects');
+const searchScoreRouter = require('./routes/searchScore');
+const insertNews = require('./routes/insertNews');
 
 
 const app = express();
+
+// Connect MongoDB
+connectDB();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,6 +39,7 @@ app.use(expressLayouts);
 app.set('layout', 'layout/main'); // บอกให้ใช้ layout หลัก
 
 // Bootstrap
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/font')));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 
@@ -48,13 +57,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/login', loginRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/aboutme', aboutmeRoute); // เปลี่ยนเส้นทางตามที่ต้องการ
+app.use('/aboutme', aboutmeRoute);
 app.use('/project', projectRouter)
+app.use('/insertNews', insertNews)
+app.use('/searchScore', searchScoreRouter)
 
 
 // Catch 404
 app.use((req, res, next) => {
-  next(createError(404));
+  // next(createError(404));
+  res.render('404')
 });
 
 // Error handler

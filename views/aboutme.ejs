@@ -1,21 +1,90 @@
-<header>
-    <h1><%= content %></h1>
-</header>
+<!DOCTYPE html>
+<html lang="en">
 
-<section>
-    <h2>Dr. Nadech Project</h2>
-    <p>Dr. Nadech is a leading researcher and innovator in the field of science and technology. Our mission is to advance knowledge and provide solutions to global challenges through high-quality research projects and collaborations.</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
 
-    <h2>Our Vision</h2>
-    <p>To be a global leader in research and innovation, contributing to the well-being of society by addressing complex challenges in health, technology, and sustainability.</p>
+<body>
+    <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center"
+            style="background-image: url('/img/bg_web.png'); height: 70vh; background-size: cover; background-position: center;">
+            <div class="container position-relative">
+                <div class="row d-flex">
+                    <div class="col-lg-12 text-start">
+                        <h1 id="text"
+                            style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-weight: bold;">งามนิจ
+                            อาจอินทร์</h1>
+                        <h1 id="text"
+                            style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-weight: bold;">
+                            Ngamnit Atjin</h1>
+                        <div class="text-dark p-4 rounded"
+                            style="background-color: white; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); max-width: 800px;">
+                            <p style="line-height: 1.6;">
+                                รศ.ดร. งามนิจ อาจอินทร์ ได้รับปริญญาเอกในสาขาวิทยาการคอมพิวเตอร์จากจุฬาลงกรณ์มหาวิทยาลัย
+                                หลังจากสำเร็จการศึกษาปริญญาโทในสาขาวิศวกรรมซอฟต์แวร์
+                                และปริญญาตรีในสาขาระบบสารสนเทศคอมพิวเตอร์
+                            </p>
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                            aria-expanded="true" aria-controls="collapseOne">
+                                            ประวัติการศึกษา
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                    data-parent="#accordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <% user.educations.forEach(function(education) { %>
+                                                <li>
+                                                    <%= education.degree %>, <%= education.institution %> (ปีจบ: <%=
+                                                                education.graduationYear %>)
+                                                </li>
+                                                <% }); %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                            data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                            ประสบการณ์ทำงาน
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                    data-parent="#accordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <% user.experiences.forEach(function(experience) { %>
+                                                <li>
+                                                    <%= experience.position %>, <%= experience.institution %> (ปี: <%=
+                                                                experience.startYear %> - <%= experience.endYear ?
+                                                                    experience.endYear : 'ปัจจุบัน' %>)
+                                                </li>
+                                                <% }); %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h2>Our Team</h2>
-    <p>Our team consists of dedicated researchers, scientists, and engineers who are passionate about making a difference through innovation and scientific inquiry.</p>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
 
-    <h2>Contact Information</h2>
-    <ul>
-        <li>Email: info@drnadech.com</li>
-        <li>Phone: +123 456 7890</li>
-        <li>Address: 123 Research Lane, Science City</li>
-    </ul>
-</section>
+</html>

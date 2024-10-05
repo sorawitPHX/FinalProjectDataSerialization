@@ -1,10 +1,78 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #f8f9fa; /* สีพื้นหลังอ่อน */
+* {
+  margin: 0;
 }
 
+.breadcrumbs {
+  background: #000;
+}
 
-a {
-  color: #00B7FF;
+.footer {
+  font-size: 14px;
+  background-color: #0e1d34;
+  padding: 50px 0;
+  color: white;
+}
+
+.content {
+  min-height: 90vh;
+}
+
+.table-title {
+  background-color: #435d7d;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0 !important;
+}
+
+.h {
+  text-align: center;
+  padding:0 1em .5em 1em;
+  border-bottom: 1px solid rgb(207, 207, 207);
+}
+
+.card .card-title {
+  font-size: 1.3em;
+}
+.card .card-title a {
+  text-decoration: none;
+}
+.card p {
+  margin: .5em;
+  max-height: 100px;
+  overflow: auto;
+  font-size: .9em;
+}
+
+.card p::-webkit-scrollbar {
+  width: 4px;
+}
+
+.card p::-webkit-scrollbar-track {
+  /* background: #f1f1f1; */
+}
+
+.card p::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.card p::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.newsTitle {
+  
+  max-width: 150px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+.newsContent {
+  max-width: 200px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+.modalHead {
+  max-width: 95%;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }

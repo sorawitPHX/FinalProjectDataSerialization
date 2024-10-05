@@ -1,18 +1,77 @@
-const express = require('express');
-const router = express.Router();
+// routes/about.js
+var express = require('express');
+var router = express.Router();
+const User = require('../models/User');
 
-// ตัวอย่างข้อมูลเริ่มต้น
-let storyContent = "This is เกี่ยวกับฉัน";
-
-// เส้นทางสำหรับหน้า About
-router.get('/', (req, res) => {
-    res.render('aboutme', { title: 'เกี่ยวกับฉัน', content: storyContent, activePage: 'aboutme' });
+/* GET about page. */
+router.get('/', async function (req, res, next) {
+    // สามารถดึงข้อมูลผู้ใช้จากฐานข้อมูลถ้าจำเป็น
+    const user = await User.findOne(); // แก้ไขตามความจำเป็น
+    res.render('aboutme', { user }); // ส่งข้อมูล user ไปยัง View
 });
 
-// เส้นทางสำหรับการอัปเดตข้อมูล
-router.post('/update', (req, res) => {
-    storyContent = req.body.story; // อัปเดตเนื้อหาของ storyContent
-    res.redirect('/aboutme'); // เปลี่ยนเส้นทางกลับไปยังหน้า About Me
+router.get('/insert', async function (req, res, next) {
+    const sampleUserData = {
+        email: "john.doe" + Math.floor(Math.random() * 100) + "@example.com",
+        password: "hashedpassword123", // ในการใช้งานจริงควรใช้การเข้ารหัส password ด้วย bcrypt
+        prefix_th: "รศ.ดร.",
+        firstname_th: "งามนิจ",
+        lastname_th: "อาจอินทร์",
+        description_th: "ผู้เชี่ยวชาญด้านซอฟต์แวร์และระบบสารสนเทศ",
+        prefix_en: "Assoc. Prof. Dr.",
+        firstname_en: "Ngamnit",
+        lastname_en: "Atjin",
+        description_en: "Software and Information Systems Expert",
+        role: 'super admin',
+        rewards: [
+            "Best Paper Award at IMECS 2019",
+            "Excellence in Research Award 2021"
+        ],
+        educations: [
+            {
+                level: "ปริญญาเอก",
+                degree: "วศ.ด. (วิศวกรรมคอมพิวเตอร์)",
+                institution: "จุฬาลงกรณ์มหาวิทยาลัย",
+                graduationYear: 2562
+            },
+            {
+                level: "ปริญญาโท",
+                degree: "วท.ม. (วิศวกรรมซอฟต์แวร์)",
+                institution: "จุฬาลงกรณ์มหาวิทยาลัย",
+                graduationYear: 2554
+            },
+            {
+                level: "ปริญญาตรี",
+                degree: "วท.บ. (ระบบสารสนเทศคอมพิวเตอร์)",
+                institution: "มหาวิทยาลัยบูรพา",
+                graduationYear: 2551
+            }
+        ],
+        experiences: [
+            {
+                startYear: 2565,
+                endYear: null, // ปัจจุบัน
+                position: "ผู้ช่วยศาสตราจารย์",
+                institution: "วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น"
+            },
+            {
+                startYear: 2564,
+                endYear: 2565,
+                position: "อาจารย์",
+                institution: "วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น"
+            },
+            {
+                startYear: 2562,
+                endYear: 2565,
+                position: "นักวิจัยหลังปริญญาเอก",
+                institution: "คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย"
+            }
+        ]
+    };
+
+    let newUser = new User(sampleUserData);
+    await newUser.save();
+    res.status(200).send(newUser);
 });
 
 module.exports = router;
