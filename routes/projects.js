@@ -148,7 +148,6 @@ router.post('/update', async (req, res) => {
             }
         }
     })
-
 });
 
 // Delete Project by ID

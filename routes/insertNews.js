@@ -77,6 +77,60 @@ router.post('/insert', (req, res) => {
     });
 });
 
+router.get('/delete/:id', async (req, res) => {
+    try {
+        const deletedNews = await News.findByIdAndDelete(req.params.id);
+        if (!deletedNews) {
+            return res.status(404).send('News not found');
+        }
+        res.redirect('/insertNews')
+        // res.status(200).send('Project deleted successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error deleting the news');
+    }
+});
+
+router.post('/updateNews', async (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            res.status(400).send({ err })
+        } else {
+            let path = ''
+            if (req.file == undefined) {
+                if (req.body.News_img_path) {
+                    path = req.body.News_img_path
+                } else {
+                    res.status(400).send({ msg: 'No any img path' })
+                }
+            } else {
+                path = `uploads/news/${req.file.filename}`
+            }
+            try {
+                const updatedNews = await News.findByIdAndUpdate(
+                    req.body.id,
+                    {
+                        title: req.body.new_title,
+                        content: req.body.new_content,
+                        image: path,
+                    },
+                    { new: true } // Return the updated document
+                );
+
+                if (!updatedNews) {
+                    return res.status(404).send('News not found');
+                }
+                res.redirect('/insertNews');
+            } catch (err) {
+                console.error(err);
+                res.status(500).send('Error updating the News');
+            }
+        }
+    })
+});
+
+
+
 // router.post('/updateNews/:id', async (req, res) => {
 //     const newsId = req.params.id;
 //     const { news_title, news_content, news_image } = req.body;

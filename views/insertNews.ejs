@@ -49,7 +49,7 @@
     </thead>
     <tbody>
         <% if (newsList.length > 0) { %> 
-            <% newsList.forEach((news) => { %> 
+            <% newsList.forEach((news, index) => { %>
                 <tr>
                     <td class="text-center">
                         <input type="checkbox">
@@ -58,20 +58,12 @@
                     <td class="newsContent"><%= news.content %></td> 
                     <td>
                         <% if (news.image) { %>
-                            <!-- <img src="/<%= news.image %>" alt="News Image" style="width: 100px;"> -->
                             <%= news.image %>
                         <% } else { %>
                             No Image
                         <% } %>
                     </td>
                     <td class="text-center">
-                      <a href="/edit/<%= news._id %>" class="btn btn-sm btn-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#Viewmodal_<%= news._id %>"
-                        data-title="<%= news.title %>" 
-                        data-content="<%= news.content %>" 
-                        data-image="<%= news.image ? '/' + news.image : 'img/no_image.jpg' %>">
-                        <i class="bi bi-arrow-up-right-square-fill"></i></a>
                       <a href="#" class="btn btn-sm btn-warning news-button" 
                          data-bs-toggle="modal"
                          data-bs-target="#editProjectModal_<%= news._id %>"
@@ -80,111 +72,94 @@
                          data-image="<%= news.image ? '/' + news.image : 'img/no_image.jpg' %>">
                           <i class="bi bi-pencil-fill"></i>
                       </a>
-                      <a href="/delete/<%= news._id %>" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></a>
+                        <button
+                            onclick="deleteNews(['<%= index+1 %>', '<%= news._id %>'])"
+                            class="px-2 btn btn-danger" data-toggle="modal"
+                            style="text-decoration: none;">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
                   </td>
-                  <form action="/insertNews/updateNews/<%= news._id %>" method="post" enctype="multipart/form-data">
+                </tr>
+                  <form action="/insertNews/updateNews/" method="post" enctype="multipart/form-data">
                     <div class="modal fade" id="editProjectModal_<%= news._id %>" tabindex="-1"
                         aria-labelledby="editProjectModalLabel" aria-hidden="true">
                         <div class="modal-dialog-centered modal-dialog-scrollable modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">แก้ไขข่าวสาร</h4>
+                                    <h4 class="modal-title">แก้ไขงานวิจัย/โครงงาน</h4>
                                     <div class="ms-auto">
-                                        <button type="button" class="btn" data-bs-dismiss="modal" aria-hidden="true">X</button>
+                                        <button type="button" class="btn"
+                                            data-bs-dismiss="modal"
+                                            aria-hidden="true">X</button>
                                     </div>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="hidden" name="id" value="<%= news._id %>">
+                                    <input type="hidden" name="id" name="id" value="<%= news._id %>">
+                                    <input type="hidden" name="News_img_path" name="News_img_path" value="<%= news.image %>">
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" required id="news_title_<%= news._id %>" name="news_title" placeholder="Enter the title here." style="height: 150px; resize: none;"><%= news.title %></textarea>
-                                        <label for="news_title_<%= news._id %>">หัวข้อข่าวสาร</label>
+                                        <textarea class="form-control" required
+                                            id="new_title" name="new_title"
+                                            placeholder="Enter the content here."
+                                            style="height: 150px; resize: none;"><%= news.title %></textarea>
+                                        <label for="new_title">หัวข้อข่าวสาร</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" required placeholder="Enter the content here." id="news_content_<%= news._id %>" name="news_content" style="height: 180px; resize: none"><%= news.content %></textarea>
-                                        <label for="news_content_<%= news._id %>">เนื้อหา</label>
+                                        <textarea class="form-control" required
+                                            placeholder="Enter the content here."
+                                            id="new_content" name="new_content"
+                                            style="height: 300px; resize: none;"><%= news.content %></textarea>
+                                        <label for="new_content">Content | เนื้อหา</label>
                                     </div>
-                                    <div class="form-floating mb-3 col-lg-6">
-                                        <input type="text" class="form-control" id="news_image_<%= news._id %>" name="news_image" value="<%= news.image %>" disabled>
-                                        <label for="news_image_<%= news._id %>" >ที่อยู่ไฟล์</label>
-                                    </div>
-                
+
                                     <div class="mb-3">
                                         <div class="row row-cols-1 row-cols-md-2 g-4">
                                             <div class="col">
                                                 <div class="card">
-                                                    <img src="<%= news.image %>" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Current Image">
+                                                    <img src="<%= news.image %>"
+                                                        class="card-img-top" style="height: 500px; object-fit: cover;">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Current Image</h5>
+                                                        <h5 class="card-title">รูปปัจจุบัน
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="card">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Upload New Image</h5>
-                                                        <div class="input-group mt-3">
-                                                            <input type="file" class="form-control" id="news_img_<%= news._id %>" name="news_img">
-                                                            <label class="input-group-text" for="news_img_<%= news._id %>">Upload</label>
+                                                    <div class="placeholder-glow">
+                                                        <div src="..."
+                                                            class="card-img-top placeholder"
+                                                            alt="..."
+                                                            style="height: 450px; ">
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">รูปใหม่ (Optional)
+                                                            </h5>
+                                                            <div class="input-group mt-3">
+                                                                <input type="file"
+                                                                    class="form-control"
+                                                                    id="image"
+                                                                    name="image" accept="image/png, image/gif, image/jpeg">
+                                                                <label
+                                                                    class="input-group-text "
+                                                                    for="image">Upload</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer bg-light">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                    <button type="submit" class="btn btn-info">บันทึก</button>
+                                    <input type="button" class="btn btn-default"
+                                        data-bs-dismiss="modal" value="ยกเลิก">
+                                    <input type="submit" class="btn btn-primary"
+                                        value="บันทึก">
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </form>
-                
-                <div class="modal fade" id="Viewmodal_<%= news._id %>" tabindex="-1"
-                  aria-labelledby="ViewmodalLabel" aria-hidden="true">
-                  <div class="modal-dialog-centered modal-dialog-scrollable modal-dialog modal-xl">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h4 class="modal-title modalHead"><%= news.title %></h4>
-                              <div class="ms-auto">
-                                  <button type="button" class="btn" data-bs-dismiss="modal" aria-hidden="true">X</button>
-                              </div>
-                          </div>
-                          <div class="modal-body">
-                              <input type="hidden" name="id" value="<%= news._id %>">
-
-                              <!-- img -->
-                              <div class="mb-3"">
-                                <div class="row row-cols-1 row-cols-md-2 g-4 d-flex justify-content-center text-center">
-                                    <div class="col">
-                                        <div class="card">
-                                            <img src="<%= news.image %>" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Current Image">
-                                            <div class="card-body">
-                                                <h5 class="card-title">ภาพปัจจุบัน</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              </div>
-                              <div class="form-floating mb-3">
-                                  <textarea class="form-control" required disabled placeholder="Enter the content here." id="news_content_<%= news._id %>" name="news_content" style="height: 180px; resize: none"><%= news.content %></textarea>
-                                  <label for="news_content_<%= news._id %>">เนื้อหา</label>
-                              </div>
-                              <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="news_image_<%= news._id %>" name="news_image" value="<%= news.image %>" disabled>
-                                  <label for="news_image_<%= news._id %>" >ที่อยู่ไฟล์</label>
-                              </div>
-          
-
-                          </div>
-                          <div class="modal-footer bg-light">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-                </tr>
             <% }); %>
         <% } else { %>
             <tr>
@@ -264,3 +239,26 @@
           </div> -->
   </main>
 </div>
+<script>
+                    function deleteNews(data) {
+                        Swal.fire({
+                            title: `ลบข้อมูลลำดับที่ ${data[0]} หรือไม่?`,
+                            text: "หากคุณลบแล้วจะไม่สามารถกู้คืนได้!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/insertNews/delete/' + data[1]
+                                // Swal.fire({
+                                //     title: "Deleted!",
+                                //     text: "Your file has been deleted.",
+                                //     icon: "success"
+                                // });
+                            }
+                        });
+                    }
+</script>
