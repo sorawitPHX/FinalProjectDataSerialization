@@ -59,16 +59,44 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body" style="background-color: #f3e8ff;">
                     <h4>
-                        <%= user.prefix_th || "" %>
-                            <%= user.firstname_th || "" %>
-                                <%= user.lastname_th || "" %>
+                        <%= user.prefix_th ? user.prefix_th + " " : "" %>
+                            <%= user.firstname_th ? user.firstname_th + " " : "" %>
+                                <%= user.lastname_th ? user.lastname_th : "" %>
                     </h4>
-                        <p>
-                            <%= user.description_en %>
-                        </p>
+
+                    <p>
+                        <%= user.description_en || "No description available." %>
+                    </p>
+
                     <h4>
-                    <%= user.expertise || "" %>
+                        <%= user.expertise || "" %>
                     </h4>
+
+                    <ul>
+                        <% if (user.expertIns && user.expertIns.length> 0) { %>
+                            <% user.expertIns.forEach(function(expertIn) { %>
+                                <li>
+                                    <%= expertIn %>
+                                </li>
+                                <% }); %>
+                                    <% } else { %>
+                                        <li>No expert insights available.</li>
+                                        <% } %>
+                    </ul>
+
+                    <h4>Rewards</h4>
+
+                    <ul>
+                        <% if (user.rewards && user.rewards.length> 0) { %>
+                            <% user.rewards.forEach(function(reward) { %>
+                                <li>
+                                    <%= reward %>
+                                </li>
+                                <% }); %>
+                                    <% } else { %>
+                                        <li>No rewards available.</li>
+                                        <% } %>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -86,14 +114,34 @@
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body" style="background-color: #f3e8ff;">
-                    <ul>
-                        <% user.educations.forEach(function(education) { %>
-                            <li>
-                                <%= education.degree %>, <%= education.institution %> (ปีจบ: <%=
-                                            education.graduationYear %>)
-                            </li>
-                            <% }); %>
-                    </ul>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ระดับ</th>
+                                <th>ชื่อปริญญา (สาขาวิชา)</th>
+                                <th>ชื่อสถาบัน</th>
+                                <th>ปี พ.ศ. ที่จบ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% user.educations.forEach(function(education) { %>
+                                <tr>
+                                    <td>
+                                        <%= education.level %>
+                                    </td>
+                                    <td>
+                                        <%= education.degree %>
+                                    </td>
+                                    <td>
+                                        <%= education.institution %>
+                                    </td>
+                                    <td>
+                                        <%= education.graduationYear %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -114,8 +162,10 @@
                     <ul>
                         <% user.experiences.forEach(function(experience) { %>
                             <li>
-                                <%= experience.position %>, <%= experience.institution %> (ปี: <%= experience.startYear
-                                            %> - <%= experience.endYear ? experience.endYear : 'ปัจจุบัน' %>)
+                                <%= experience.startYear %> - <%= experience.endYear ? experience.endYear : "ปัจจุบัน"
+                                        %>
+                                        <%= experience.position %>
+                                            <%= experience.institution %>
                             </li>
                             <% }); %>
                     </ul>

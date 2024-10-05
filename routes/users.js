@@ -64,12 +64,13 @@ router.get('/insert', async function (req, res, next) {
         institution: "คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย"
       }
     ],
-    expertise:"ความเชี่ยวชาญ",
     expertIns: [
       "Semantic Web and Ontology Engineering",
       "Ontology-based Data Integration",
       "Semantic Sentiment Analysis"
     ],
+    expertise:"ความเชี่ยวชาญ",
+    
   };
 
   let newUser = new User(sampleUserData)
