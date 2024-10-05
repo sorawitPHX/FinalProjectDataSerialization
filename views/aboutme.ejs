@@ -17,66 +17,20 @@
                 <div class="row d-flex">
                     <div class="col-lg-12 text-start">
                         <h1 id="text"
-                            style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-weight: bold;">งามนิจ
-                            อาจอินทร์</h1>
+                            style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-weight: bold;">
+                            <%= user.firstname_th || "" %>
+                                <%= user.lastname_th || "" %>
+                        </h1>
                         <h1 id="text"
                             style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-weight: bold;">
-                            Ngamnit Atjin</h1>
+                            <%= user.firstname_en || "" %>
+                                <%= user.lastname_en || "" %>
+                        </h1>
                         <div class="text-dark p-4 rounded"
                             style="background-color: white; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); max-width: 800px;">
                             <p style="line-height: 1.6;">
-                                รศ.ดร. งามนิจ อาจอินทร์ ได้รับปริญญาเอกในสาขาวิทยาการคอมพิวเตอร์จากจุฬาลงกรณ์มหาวิทยาลัย
-                                หลังจากสำเร็จการศึกษาปริญญาโทในสาขาวิศวกรรมซอฟต์แวร์
-                                และปริญญาตรีในสาขาระบบสารสนเทศคอมพิวเตอร์
+                                <%= user.description_th || "" %>
                             </p>
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                            aria-expanded="true" aria-controls="collapseOne">
-                                            ประวัติการศึกษา
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                                    data-parent="#accordion">
-                                    <div class="card-body">
-                                        <ul>
-                                            <% user.educations.forEach(function(education) { %>
-                                                <li>
-                                                    <%= education.degree %>, <%= education.institution %> (ปีจบ: <%=
-                                                                education.graduationYear %>)
-                                                </li>
-                                                <% }); %>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse"
-                                            data-target="#collapseTwo" aria-expanded="false"
-                                            aria-controls="collapseTwo">
-                                            ประสบการณ์ทำงาน
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                    data-parent="#accordion">
-                                    <div class="card-body">
-                                        <ul>
-                                            <% user.experiences.forEach(function(experience) { %>
-                                                <li>
-                                                    <%= experience.position %>, <%= experience.institution %> (ปี: <%=
-                                                                experience.startYear %> - <%= experience.endYear ?
-                                                                    experience.endYear : 'ปัจจุบัน' %>)
-                                                </li>
-                                                <% }); %>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,7 +38,124 @@
         </div>
     </div>
 
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <div>
+        <h2 class="text-center mt-4" style="color: #6f2c91; font-weight: bold;">ข้อมูลส่วนตัว</h2>
+    </div>
+
+    <div style="height: 5px; background-color: #d2acfc; width: 20%; margin: 20px auto;"></div>
+
+    <div id="accordion" style="max-width: 1100px; margin: auto;">
+        <div class="card mb-3" style="border: none; border-radius: 0;">
+            <div class="card-header" id="headingOne" style="background-color: #6f2c91; color: white;">
+                <h4 class="mb-0 d-flex justify-content-between align-items-center">
+                    <button class="btn custom-btn" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne" style="color: white; font-weight: bold;">
+                        ข้อมูลส่วนตัว
+                    </button>
+                    <span class="icon" style="font-family: 'Font Awesome 5 Free'; font-weight: 900;">&#xf107;</span>
+                    <!-- ลูกศรลง -->
+                </h4>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body" style="background-color: #f3e8ff;">
+                    <h4>
+                        <%= user.prefix_th || "" %>
+                            <%= user.firstname_th || "" %>
+                                <%= user.lastname_th || "" %>
+                    </h4>
+                        <p>
+                            <%= user.description_en %>
+                        </p>
+                    <h4>
+                    <%= user.expertise || "" %>
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3" style="border: none; border-radius: 0;">
+            <div class="card-header" id="headingTwo" style="background-color: #6f2c91; color: white;">
+                <h4 class="mb-0 d-flex justify-content-between align-items-center">
+                    <button class="btn custom-btn" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo" style="color: white; font-weight: bold;">
+                        ประวัติการศึกษา
+                    </button>
+                    <span class="icon" style="font-family: 'Font Awesome 5 Free'; font-weight: 900;">&#xf107;</span>
+                    <!-- ลูกศรลง -->
+                </h4>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body" style="background-color: #f3e8ff;">
+                    <ul>
+                        <% user.educations.forEach(function(education) { %>
+                            <li>
+                                <%= education.degree %>, <%= education.institution %> (ปีจบ: <%=
+                                            education.graduationYear %>)
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3" style="border: none; border-radius: 0;">
+            <div class="card-header" id="headingThree" style="background-color: #6f2c91; color: white;">
+                <h4 class="mb-0 d-flex justify-content-between align-items-center">
+                    <button class="btn custom-btn" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="false" aria-controls="collapseThree" style="color: white; font-weight: bold;">
+                        ประสบการณ์ทำงาน
+                    </button>
+                    <span class="icon" style="font-family: 'Font Awesome 5 Free'; font-weight: 900;">&#xf107;</span>
+                    <!-- ลูกศรลง -->
+                </h4>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body" style="background-color: #f3e8ff;">
+                    <ul>
+                        <% user.experiences.forEach(function(experience) { %>
+                            <li>
+                                <%= experience.position %>, <%= experience.institution %> (ปี: <%= experience.startYear
+                                            %> - <%= experience.endYear ? experience.endYear : 'ปัจจุบัน' %>)
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3" style="border: none; border-radius: 0;">
+            <div class="card-header" id="headingFour" style="background-color: #6f2c91; color: white;">
+                <h4 class="mb-0 d-flex justify-content-between align-items-center">
+                    <button class="btn custom-btn" data-toggle="collapse" data-target="#collapseFour"
+                        aria-expanded="false" aria-controls="collapseFour" style="color: white; font-weight: bold;">
+                        ผลงานวิจัย
+                    </button>
+                    <span class="icon" style="font-family: 'Font Awesome 5 Free'; font-weight: 900;">&#xf107;</span>
+                    <!-- ลูกศรลง -->
+                </h4>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body" style="background-color: #f3e8ff;">
+                    ...
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- เพิ่มการเชื่อมโยง Bootstrap และ jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            document.getElementById('editButton').onclick = function () {
+                document.getElementById('editForm').style.display = 'block';
+                document.getElementById('storyText').style.display = 'none';
+                this.style.display = 'none';
+            }
+        </script>
 </body>
 
 </html>
