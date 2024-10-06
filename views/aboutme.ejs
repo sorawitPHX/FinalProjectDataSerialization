@@ -119,14 +119,9 @@
                             </div> 
                             <div class="modal-body">
                                 <form action="/update-user/<%= user._id %>" method="POST">
-                                    <input type="hidden" name="_method" value="PUT"> <!-- กำหนดให้เป็น PUT -->
                                     <div class="form-group">
                                         <label for="description_en">Description:</label>
                                         <textarea class="form-control" id="description_en" name="description_en" rows="3"><%= user.description_en || "" %></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="expertise">Expertise:</label>
-                                        <input type="text" class="form-control" id="expertise" name="expertise" value="<%= user.expertise || "" %>">
                                     </div>
                                     <div class="form-group">
                                         <label for="expertIns">Expert Insights (comma-separated):</label>
@@ -137,7 +132,7 @@
                                         <input type="text" class="form-control" id="rewards" name="rewards" value="<%= user.rewards.join(', ') || "" %>">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
-                                </form>                                
+                                </form>                                                          
                             </div>
                         </div>
                     </div>
