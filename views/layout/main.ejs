@@ -58,38 +58,43 @@
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <!-- เมนูภาษาไทย -->
           <% if (typeof activePage==='undefined' ) { %>
-            <%= activePage='None' %>
+            <% activePage=null %>
               <% } %>
-                <li class="nav-item ms-4">
+                <li class="nav-item d-flex align-items-center me-4">
                   <a class="nav-link <%= activePage == 'index' ? 'active' : '' %> " href="/">หน้าหลัก</a>
                 </li>
-                <li class="nav-item ms-4">
+                <li class="nav-item d-flex align-items-center me-4">
                   <a class="nav-link <%= activePage == 'project' ? 'active' : '' %> "
                     href="/project">งานวิจัยและโครงงาน</a>
                 </li>
-                <li class="nav-item ms-4">
+                <li class="nav-item d-flex align-items-center me-4">
                   <a class="nav-link <%= activePage == 'aboutme' ? 'active' : '' %> " href="/aboutme">เกี่ยวกับเรา</a>
                 </li>
-                <li class="nav-item ms-4">
+                <li class="nav-item d-flex align-items-center me-4">
                   <a class="nav-link <%= activePage == 'searchScore' ? 'active' : '' %> "
                     href="/searchScore">ตรวจสอบคะแนน</a>
                 </li>
-                <% if(typeof loggedUser === 'undefined' ){ %>
-                  <li class="nav-item ms-4">
+                <% if(typeof loggedUser==='undefined' ){ %>
+                  <li class="nav-item ms-4 d-flex align-items-center">
                     <a id="login" class="btn btn-outline-dark<%= activePage === 'login' ? 'active' : '' %>"
                       href="/auth/login">เข้าสู่ระบบ</a> <!-- เปลี่ยนจาก Modal เป็นลิงก์ -->
                   </li>
-                <% }else { %>
-                  <li class="nav-item dropdown">
-                    <button class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      ยินดีต้อนรับ <%= loggedUser.firstname_th %>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">โปรไฟล์</a></li>
-                      <li><a class="dropdown-item" href="/auth/logout">ออกจากระบบ</a></li>
-                    </ul>
-                  </li>
-                <% } %>
+                  <% }else { %>
+                    <li class="nav-item dropdown">
+                      <button class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <!-- ยินดีต้อนรับ <%= loggedUser.firstname_th %> -->
+                          <img src="img/profile.png" class="rounded-circle"
+                            style="width: 40px;" alt="Avatar" />
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><span class="dropdown-header"><%= loggedUser.firstname_th %> <%= loggedUser.lastname_th %></span></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <!-- <li><a class="dropdown-item" href="#">โปรไฟล์</a></li> -->
+                        <li><a class="dropdown-item" href="/auth/logout">ออกจากระบบ</a></li>
+                      </ul>
+                    </li>
+                    <% } %>
         </ul>
       </div>
     </div>
@@ -206,21 +211,21 @@
     // document.getElementById('loginForm').addEventListener('submit', function (event) {
     //   event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
 
-      // ดึงค่าจากฟอร์ม
-      // const username = document.getElementById('username').value.trim();
-      // const password = document.getElementById('password').value.trim();
+    // ดึงค่าจากฟอร์ม
+    // const username = document.getElementById('username').value.trim();
+    // const password = document.getElementById('password').value.trim();
 
-      // // ตรวจสอบข้อมูลเบื้องต้น
-      // if (username === '' || password === '') {
-      //   Swal.fire({
-      //     icon: 'warning',
-      //     title: 'ข้อผิดพลาด',
-      //     text: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน',
-      //   });
-      //   return;
-      // }
+    // // ตรวจสอบข้อมูลเบื้องต้น
+    // if (username === '' || password === '') {
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'ข้อผิดพลาด',
+    //     text: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน',
+    //   });
+    //   return;
+    // }
 
-      // ตัวอย่างการส่งข้อมูลไปยังเซิร์ฟเวอร์ด้วย AJAX (ใช้ Fetch API)
+    // ตัวอย่างการส่งข้อมูลไปยังเซิร์ฟเวอร์ด้วย AJAX (ใช้ Fetch API)
     //   fetch('/login', { // เปลี่ยน URL ให้ตรงกับเส้นทางที่เซิร์ฟเวอร์ของคุณรองรับ
     //     method: 'POST',
     //     headers: {

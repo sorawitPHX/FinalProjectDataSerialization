@@ -47,7 +47,9 @@
         <h2 class="news h">ข่าวสาร</h2>
         <% if(loggedUser) { %>
           <% if(loggedUser.role == 'super admin') { %>
-            <button class="btn btn-dark">จัดการข่าวสาร</button>
+            <div class="text-end mt-3">
+              <a href="/insertNews" class="btn btn-outline-dark">จัดการข่าวสาร</a>
+            </div>
           <% } %>
         <% } %>
         <br>

@@ -120,40 +120,48 @@
                                             <div class="col">
                                                 <div class="card">
                                                     <img src="<%= news.image %>"
-                                                        class="card-img-top" style="height: 500px; object-fit: cover;">
+                                                         class="card-img-top" style="height: 500px; object-fit: cover;">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">รูปปัจจุบัน
-                                                        </h5>
+                                                        <h5 class="card-title">รูปปัจจุบัน</h5>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="card">
-                                                    <div class="placeholder-glow">
-                                                        <div src="..."
-                                                            class="card-img-top placeholder"
-                                                            alt="..."
-                                                            style="height: 450px; ">
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">รูปใหม่ (Optional)
-                                                            </h5>
-                                                            <div class="input-group mt-3">
-                                                                <input type="file"
-                                                                    class="form-control"
-                                                                    id="image"
-                                                                    name="image" accept="image/png, image/gif, image/jpeg">
-                                                                <label
-                                                                    class="input-group-text "
-                                                                    for="image">Upload</label>
-                                                            </div>
+                                                    <div id="newImagePreview_<%= news._id %>" class="card-img-top" 
+                                                         style="height: 450px; object-fit: cover;">
+                                                         
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">รูปใหม่ (Optional)</h5>
+                                                        <div class="input-group mt-3">
+                                                            <input type="file" class="form-control" id="image_<%= news._id %>"
+                                                                   name="image" accept="image/png, image/gif, image/jpeg">
+                                                            <label class="input-group-text" for="image">Upload</label>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
+                                            <script>
+                                                document.getElementById('image_<%= news._id %>').addEventListener('change', function(event) {
+                                                    const file = event.target.files[0];
+                                                    const preview = document.getElementById('newImagePreview_<%= news._id %>');
+                                    
+                                                    // ตรวจสอบว่ามีการอัพโหลดไฟล์และเป็นไฟล์ภาพ
+                                                    if (file && file.type.startsWith('image/')) {
+                                                        const reader = new FileReader();
+                                                        
+                                                        reader.onload = function(e) {
+                                                            preview.innerHTML = '<img src="' + e.target.result + '" style="height: 100%; object-fit: cover;">';
+                                                        }
+                                                        
+                                                        reader.readAsDataURL(file); // อ่านไฟล์ภาพใหม่เป็น base64
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 <div class="modal-footer bg-light">
                                     <input type="button" class="btn btn-default"

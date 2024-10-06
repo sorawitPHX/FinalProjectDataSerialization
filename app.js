@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const createError = require('http-errors');
 const connectDB = require('./db');
 const methodOverride = require('method-override');
+const User = require('./models/User.js')
 
 // auth middleware
 const authenticateToken = require('./middleware/authMiddleware.js'); // import middleware ที่สร้างขึ้นมา
@@ -108,9 +109,13 @@ app.use('/comments', authenticateToken, commentRouter);
 
 
 // Catch 404
-app.use((req, res, next) => {
+app.use(authenticateToken, async (req, res, next) => {
   // next(createError(404));
-  res.render('404')
+  let loggedUser = undefined
+  if (typeof res.locals.user !== 'undefined') {
+    loggedUser = await User.findOne({ _id: res.locals.user.userId })
+  }
+  res.render('404', {loggedUser})
 });
 
 // Error handler
