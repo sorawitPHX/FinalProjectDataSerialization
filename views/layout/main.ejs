@@ -68,12 +68,13 @@
                     href="/project">งานวิจัยและโครงงาน</a>
                 </li>
                 <li class="nav-item d-flex align-items-center me-4">
-                  <a class="nav-link <%= activePage == 'aboutme' ? 'active' : '' %> " href="/aboutme">เกี่ยวกับเรา</a>
-                </li>
-                <li class="nav-item d-flex align-items-center me-4">
                   <a class="nav-link <%= activePage == 'searchScore' ? 'active' : '' %> "
                     href="/searchScore">ตรวจสอบคะแนน</a>
                 </li>
+                <li class="nav-item d-flex align-items-center me-4">
+                  <a class="nav-link <%= activePage == 'aboutme' ? 'active' : '' %> " href="/aboutme">เกี่ยวกับเรา</a>
+                </li>
+                
                 <% if(typeof loggedUser==='undefined' ){ %>
                   <li class="nav-item ms-4 d-flex align-items-center">
                     <a id="login" class="btn btn-outline-dark<%= activePage === 'login' ? 'active' : '' %>"
