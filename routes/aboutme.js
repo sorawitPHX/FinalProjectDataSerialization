@@ -18,7 +18,7 @@ router.get('/', async function (req, res, next) {
         // ดึงข้อมูลโปรเจ็กต์จากฐานข้อมูล
         const projects = await Project.find(); // หรือสามารถกรองตามเงื่อนไขที่ต้องการได้
 
-        res.render('aboutme', { user, projects, loggedUser }); // ส่งข้อมูล user และ projects ไปยัง View
+        res.render('aboutme', { title:'เกี่ยวกับเรา',activePage: 'aboutme', user, projects, loggedUser }); // ส่งข้อมูล user และ projects ไปยัง View
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'เกิดข้อผิดพลาดในการดึงข้อมูล' });

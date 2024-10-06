@@ -23,7 +23,7 @@ const searchScoreRouter = require('./routes/searchScore');
 const insertNews = require('./routes/insertNews');
 const commentRouter = require('./routes/comment.js');
 const authRouter = require('./routes/auth')
-
+const newsRouter = require('./routes/news');
 
 const app = express();
 
@@ -34,7 +34,6 @@ connectDB();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -44,7 +43,6 @@ app.use(methodOverride('_method'));
 
 // Use express-ejs-layouts
 app.use(expressLayouts);
-// Set default layout file (main.ejs)
 app.set('layout', 'layout/main'); // บอกให้ใช้ layout หลัก
 
 // Bootstrap
@@ -59,63 +57,29 @@ app.use(session({
   saveUninitialized: true
 }));
 
-// Passport
-// passport.use(
-//   new LocalStrategy((email, password, cb) => {
-//     User.findOne({ email }, (err, user) => {
-//       if (err) {
-//         return cb(err);
-//       }
-//       if (!user) {
-//         return cb(null, false);
-//       }
-
-//       if (bcrypt.compareSync(password, user.password)) {
-//         return cb(null, user);
-//       }
-//       return cb(null, false);
-//     });
-//   })
-// );
-
-// passport.serializeUser((user, cb) => {
-//   cb(null, user._id);
-// });
-
-// passport.deserializeUser((id, cb) => {
-//   User.findById(id, (err, user) => {
-//     if (err) {
-//       return cb(err);
-//     }
-//     cb(null, user);
-//   });
-// });
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 // Body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routes
-app.use('/', authenticateToken, indexRouter);
-app.use('/auth', authenticateToken, authRouter);
+app.use('/',authenticateToken, indexRouter); // ปล่อยให้หน้าแรกเข้าถึงได้
+app.use('/auth',authenticateToken,  authRouter);
 app.use('/users', authenticateToken, usersRouter);
 app.use('/aboutme', authenticateToken, aboutmeRoute);
-app.use('/project', authenticateToken, projectRouter)
-app.use('/insertNews', authenticateToken, insertNews)
-app.use('/searchScore', authenticateToken, searchScoreRouter)
+app.use('/project', authenticateToken, projectRouter);
+app.use('/insertNews', authenticateToken, insertNews);
+app.use('/searchScore', authenticateToken, searchScoreRouter);
 app.use('/comments', authenticateToken, commentRouter);
+app.use('/news', authenticateToken, newsRouter);
 
 
+// Routes
 // Catch 404
-app.use(authenticateToken, async (req, res, next) => {
-  // next(createError(404));
+app.use(async (req, res, next) => {
   let loggedUser = undefined
   if (typeof res.locals.user !== 'undefined') {
     loggedUser = await User.findOne({ _id: res.locals.user.userId })
   }
-  res.render('404', {loggedUser})
+  res.render('404', { loggedUser });
 });
 
 // Error handler

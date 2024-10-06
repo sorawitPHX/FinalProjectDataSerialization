@@ -8,7 +8,7 @@ router.get('/', async function (req, res, next) {
   if (typeof res.locals.user !== 'undefined') {
     loggedUser = await User.findOne({ _id: res.locals.user.userId })
   }
-  res.render('searchScore', { activePage: 'searchScore', loggedUser });
+  res.render('searchScore', { title:'ตรวจสอบคะแนน',activePage: 'searchScore', loggedUser });
 });
 
 

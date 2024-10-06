@@ -58,12 +58,18 @@
         <% if (newsList.length > 0) { %> 
           <% newsList.forEach((news) => { %> 
             <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-              <div class="card">
-                <img src="<%= news.image ? '/' + news.image : '/img/test.png' %>" style="height: 300px; object-fit: cover;" class="card-img-top" alt="News Image" />
+              <div class="card h-100">
+                <img src="<%= news.image ? '/' + news.image : '/img/test.png' %>" style="height: 300px;" class="card-img-top object-fit-fill" alt="News Image" />
                 <div class="card-body">
-                  <h3 class="card-title"><a href="#"><%= news.title %></a></h3>
+                  <h3 class="card-title"><a href="/news/<%= news._id %>"><%= news.title %></a></h3>
                   <p><%= news.content.substring(0, 100) %>...</p> <!-- ตัดข้อความเพื่อแสดงแค่ 100 ตัวอักษร -->
                 </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                  <small class="text-muted">
+                      เมื่อ <%= new Date(news.date).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                  </small>
+                  <a href="/news/<%= news._id %>" class="btn btn-primary">อ่านเพิ่มเติม</a>
+              </div>
               </div>
             </div><!-- End Card Item -->
           <% }); %> 

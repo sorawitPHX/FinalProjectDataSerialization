@@ -1,0 +1,9 @@
+<div class="container" style="margin-top: 15vh;">
+    <h1 class="mb-3"><%= news.title %></h1>
+    <img src="/<%= news.image %>" class="img-fluid mb-4" alt="<%= news.title %>">
+    <div class="mb-3" style="white-space: pre-wrap;">
+        <%= news.content %>
+    </div>
+    <p class="text-muted">วันที่เผยแพร่: <%= news.date.toLocaleDateString() %></p>
+    <a href="/" class="btn btn-primary mt-3">กลับสู่หน้าเดิม</a>
+</div>

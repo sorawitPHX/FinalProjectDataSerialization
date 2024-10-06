@@ -7,7 +7,13 @@ const authenticateToken = (req, res, next) => {
 
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-            if (err) return res.sendStatus(403); // Forbidden
+            if (err) {
+                // ลบ token ที่หมดอายุจาก cookies
+                console.log(err)
+                res.clearCookie('authToken'); 
+                return res.redirect('/'); // Forbidden
+            }
+            // if (err) return res.redirect('/auth/logout'); // Forbidden
             res.locals.user = user; // เก็บข้อมูลผู้ใช้
             paths = ['/auth/login/', '/auth/login', 'auth/register', 'auth/register/']
             if(paths.includes(req.path)) {
