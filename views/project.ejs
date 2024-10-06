@@ -51,12 +51,10 @@
     </div>
 
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
         <% projects.forEach((project, index)=> { %>
             <div class="col">
                 <div class="card h-100 rounded-4">
-                    <!-- <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-25-hover"
-                        href="<%= project.link %>"></a> -->
                     <div class="card-header h-100 rounded-top-4">
                         <div class="text-center">
                             <h1 class="mb-3">
@@ -90,7 +88,12 @@
                                 <%= project.snippet %>
                                 <hr>
                                 <div class="text-center">
-                                    <a href="<%= project.link %>" class="btn btn-primary rounded-pill">อ่านเพิ่มเติม</a>
+                                    <div>
+                                        <a href="<%= project.link %>" class="btn btn-primary rounded-pill">อ่านเพิ่มเติม</a>
+                                        <% if(typeof project.resources !== 'undefined' ) { %>
+                                            <a class="btn btn-outline-danger rounded-pill" href="<%= project.resources[0].link %>">ไฟล์ <%= project.resources[0].file_format %></a>
+                                        <% } %>
+                                    </div>
                                 </div>
                             </div>
                         </p>
