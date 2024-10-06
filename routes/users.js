@@ -3,7 +3,11 @@ var router = express.Router();
 const User = require('../models/User')
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
+  let loggedUser = undefined
+  if (typeof res.locals.user !== 'undefined') {
+    loggedUser = await User.findOne({ _id: res.locals.user.userId })
+  }
   res.send('respond with a resource');
 });
 
@@ -69,8 +73,8 @@ router.get('/insert', async function (req, res, next) {
       "Ontology-based Data Integration",
       "Semantic Sentiment Analysis"
     ],
-    expertise:"ความเชี่ยวชาญ",
-    
+    expertise: "ความเชี่ยวชาญ",
+
   };
 
   let newUser = new User(sampleUserData)

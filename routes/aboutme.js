@@ -5,6 +5,10 @@ const Project = require('../models/Project'); // เพิ่มการนำ�
 
 /* GET about page. */
 router.get('/', async function (req, res, next) {
+    let loggedUser = undefined
+    if (typeof res.locals.user !== 'undefined') {
+        loggedUser = await User.findOne({ _id: res.locals.user.userId })
+    }
     try {
         // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
         const user = await User.findOne(); // ปรับเปลี่ยนตามความต้องการ
@@ -15,7 +19,7 @@ router.get('/', async function (req, res, next) {
         // ดึงข้อมูลโปรเจ็กต์จากฐานข้อมูล
         const projects = await Project.find(); // หรือสามารถกรองตามเงื่อนไขที่ต้องการได้
 
-        res.render('aboutme', { user, projects }); // ส่งข้อมูล user และ projects ไปยัง View
+        res.render('aboutme', { user, projects, loggedUser }); // ส่งข้อมูล user และ projects ไปยัง View
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'เกิดข้อผิดพลาดในการดึงข้อมูล' });

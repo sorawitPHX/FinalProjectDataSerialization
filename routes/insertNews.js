@@ -5,6 +5,8 @@ const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 const News = require('../models/news')
+const User = require('../models/User')
+const authenticateToken = require('../middleware/authMiddleware');
 
 router.use(express.static('public'));
 
@@ -17,8 +19,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single('image'); // รับเฉพาะไฟล์เดียวจากฟิลด์ 'image'
 
-router.get('/', async function (req, res, next) {
+router.get('/',authenticateToken, async function (req, res, next) {
     try {
+        let loggedUser = undefined
+        if(typeof res.locals.user !== 'undefined') {
+            loggedUser = await User.findOne({ _id: res.locals.user.userId })
+        }
         const status = req.query.status;
         const msg = req.query.msg;
         const search = req.query.search || '';
@@ -53,7 +59,8 @@ router.get('/', async function (req, res, next) {
             search,
             newsList,
             currentPage: page,
-            totalPages
+            totalPages,
+            loggedUser
         });
     } catch (err) {
         console.log(err);

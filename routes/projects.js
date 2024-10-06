@@ -10,7 +10,7 @@ const { log } = require('console')
 require('dotenv').config()
 
 // Define variable
-let userId = '66f8787f12e39808b3f050fc'
+// let userId = '66f8787f12e39808b3f050fc'
 
 // Set up Multer storage
 const storage = multer.diskStorage({
@@ -46,6 +46,11 @@ function checkFileType(file, cb) {
 // เส้นทางสำหรับหน้า About
 router.get('/', async (req, res) => {
     try {
+        // return res.send(res.locals.user)
+        let loggedUser = undefined
+        if (typeof res.locals.user !== 'undefined') {
+            loggedUser = await User.findOne({ _id: res.locals.user.userId })
+        }
         const msg = req.query.msg
         const status = req.query.status
         const start = await parseInt(req.query.start) || 0
@@ -108,7 +113,21 @@ router.get('/', async (req, res) => {
         // let projects = await Project.find(searchOptions).skip(skip).limit(limit)
         // const totalPage = Math.ceil(projectCount / limit)
 
-        res.render('project', { title: 'งานวิจัยและโครงงาน', activePage: 'project', projects, status, msg, limit, q, currentPage, pages, nextPage, prevPage, totalResult, user })
+        res.render('project', { 
+            title: 'งานวิจัยและโครงงาน', 
+            activePage: 'project', 
+            projects, 
+            status, 
+            msg, 
+            limit, 
+            q, 
+            currentPage, 
+            pages, 
+            nextPage, 
+            prevPage, 
+            totalResult, 
+            user, 
+            loggedUser })
     } catch (error) {
         res.send({ error })
         console.log(error)
@@ -135,7 +154,7 @@ router.get('/scholar/api', async (req, res) => {
     res.send(scholar_project)
 })
 
-router.get('/test/project', async (req, res)=>{
+router.get('/test/project', async (req, res) => {
     const projects = await Project.find()
     res.send(projects)
 })

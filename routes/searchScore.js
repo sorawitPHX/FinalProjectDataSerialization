@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
+const User = require('../models/User')
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.render('searchScore', {activePage : 'searchScore'});
+router.get('/', async function (req, res, next) {
+  let loggedUser = undefined
+  if (typeof res.locals.user !== 'undefined') {
+    loggedUser = await User.findOne({ _id: res.locals.user.userId })
+  }
+  res.render('searchScore', { activePage: 'searchScore', loggedUser });
 });
 
 

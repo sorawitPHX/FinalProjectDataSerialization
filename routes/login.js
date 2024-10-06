@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const session = require('express-session'); // ใช้ session ในการจัดการ session ของผู้ใช้
 const router = express.Router();
+const User = require('../models/User')
 
 router.use(express.json()); // เพิ่ม middleware นี้เพื่อตรวจสอบการรับ JSON
 

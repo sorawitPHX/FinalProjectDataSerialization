@@ -9,6 +9,9 @@ const createError = require('http-errors');
 const connectDB = require('./db');
 const methodOverride = require('method-override');
 
+// auth middleware
+const authenticateToken = require('./middleware/authMiddleware.js'); // import middleware ที่สร้างขึ้นมา
+
 // Router
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
@@ -18,6 +21,7 @@ const projectRouter = require('./routes/projects');
 const searchScoreRouter = require('./routes/searchScore');
 const insertNews = require('./routes/insertNews');
 const commentRouter = require('./routes/comment.js');
+const authRouter = require('./routes/auth')
 
 
 const app = express();
@@ -49,23 +53,58 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/
 
 // Setup session
 app.use(session({
-  secret: 'yourSecretKey',
+  secret: process.env.JWT_SECRET,
   resave: false,
   saveUninitialized: true
 }));
+
+// Passport
+// passport.use(
+//   new LocalStrategy((email, password, cb) => {
+//     User.findOne({ email }, (err, user) => {
+//       if (err) {
+//         return cb(err);
+//       }
+//       if (!user) {
+//         return cb(null, false);
+//       }
+
+//       if (bcrypt.compareSync(password, user.password)) {
+//         return cb(null, user);
+//       }
+//       return cb(null, false);
+//     });
+//   })
+// );
+
+// passport.serializeUser((user, cb) => {
+//   cb(null, user._id);
+// });
+
+// passport.deserializeUser((id, cb) => {
+//   User.findById(id, (err, user) => {
+//     if (err) {
+//       return cb(err);
+//     }
+//     cb(null, user);
+//   });
+// });
+
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routes
-app.use('/login', loginRouter);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/aboutme', aboutmeRoute);
-app.use('/project', projectRouter)
-app.use('/insertNews', insertNews)
-app.use('/searchScore', searchScoreRouter)
-app.use('/comments', commentRouter);
+app.use('/', authenticateToken, indexRouter);
+app.use('/auth', authenticateToken, authRouter);
+app.use('/users', authenticateToken, usersRouter);
+app.use('/aboutme', authenticateToken, aboutmeRoute);
+app.use('/project', authenticateToken, projectRouter)
+app.use('/insertNews', authenticateToken, insertNews)
+app.use('/searchScore', authenticateToken, searchScoreRouter)
+app.use('/comments', authenticateToken, commentRouter);
 
 
 // Catch 404

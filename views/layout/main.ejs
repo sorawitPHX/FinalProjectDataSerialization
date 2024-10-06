@@ -74,10 +74,22 @@
                   <a class="nav-link <%= activePage == 'searchScore' ? 'active' : '' %> "
                     href="/searchScore">ตรวจสอบคะแนน</a>
                 </li>
-                <li class="nav-item ms-4">
-                  <a id="login" class="btn btn-outline-dark<%= activePage === 'login' ? 'active' : '' %>"
-                    href="/login">เข้าสู่ระบบ</a> <!-- เปลี่ยนจาก Modal เป็นลิงก์ -->
-                </li>
+                <% if(typeof loggedUser === 'undefined' ){ %>
+                  <li class="nav-item ms-4">
+                    <a id="login" class="btn btn-outline-dark<%= activePage === 'login' ? 'active' : '' %>"
+                      href="/auth/login">เข้าสู่ระบบ</a> <!-- เปลี่ยนจาก Modal เป็นลิงก์ -->
+                  </li>
+                <% }else { %>
+                  <li class="nav-item dropdown">
+                    <button class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      ยินดีต้อนรับ <%= loggedUser.firstname_th %>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">โปรไฟล์</a></li>
+                      <li><a class="dropdown-item" href="/auth/logout">ออกจากระบบ</a></li>
+                    </ul>
+                  </li>
+                <% } %>
         </ul>
       </div>
     </div>
@@ -191,65 +203,65 @@
 
   <!-- JavaScript สำหรับจัดการฟอร์มล็อกอิน -->
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-      event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
+    // document.getElementById('loginForm').addEventListener('submit', function (event) {
+    //   event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
 
       // ดึงค่าจากฟอร์ม
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+      // const username = document.getElementById('username').value.trim();
+      // const password = document.getElementById('password').value.trim();
 
-      // ตรวจสอบข้อมูลเบื้องต้น
-      if (username === '' || password === '') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'ข้อผิดพลาด',
-          text: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน',
-        });
-        return;
-      }
+      // // ตรวจสอบข้อมูลเบื้องต้น
+      // if (username === '' || password === '') {
+      //   Swal.fire({
+      //     icon: 'warning',
+      //     title: 'ข้อผิดพลาด',
+      //     text: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน',
+      //   });
+      //   return;
+      // }
 
       // ตัวอย่างการส่งข้อมูลไปยังเซิร์ฟเวอร์ด้วย AJAX (ใช้ Fetch API)
-      fetch('/login', { // เปลี่ยน URL ให้ตรงกับเส้นทางที่เซิร์ฟเวอร์ของคุณรองรับ
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            // ปิด Modal
-            var loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-            loginModal.hide();
+    //   fetch('/login', { // เปลี่ยน URL ให้ตรงกับเส้นทางที่เซิร์ฟเวอร์ของคุณรองรับ
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({ username, password })
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       if (data.success) {
+    //         // ปิด Modal
+    //         var loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+    //         loginModal.hide();
 
-            // แสดงข้อความสำเร็จ
-            Swal.fire({
-              icon: 'success',
-              title: 'สำเร็จ',
-              text: 'เข้าสู่ระบบสำเร็จ!',
-            }).then(() => {
-              // เปลี่ยนหน้าเว็บหรือรีเฟรชหน้า
-              window.location.href = '/dashboard'; // เปลี่ยนเส้นทางตามต้องการ
-            });
-          } else {
-            // แสดงข้อผิดพลาดจากเซิร์ฟเวอร์
-            Swal.fire({
-              icon: 'error',
-              title: 'ข้อผิดพลาด',
-              text: data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
-            });
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'ข้อผิดพลาด',
-            text: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ',
-          });
-        });
-    });
+    //         // แสดงข้อความสำเร็จ
+    //         Swal.fire({
+    //           icon: 'success',
+    //           title: 'สำเร็จ',
+    //           text: 'เข้าสู่ระบบสำเร็จ!',
+    //         }).then(() => {
+    //           // เปลี่ยนหน้าเว็บหรือรีเฟรชหน้า
+    //           window.location.href = '/dashboard'; // เปลี่ยนเส้นทางตามต้องการ
+    //         });
+    //       } else {
+    //         // แสดงข้อผิดพลาดจากเซิร์ฟเวอร์
+    //         Swal.fire({
+    //           icon: 'error',
+    //           title: 'ข้อผิดพลาด',
+    //           text: data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+    //         });
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.error('Error:', error);
+    //       Swal.fire({
+    //         icon: 'error',
+    //         title: 'ข้อผิดพลาด',
+    //         text: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ',
+    //       });
+    //     });
+    // });
   </script>
 </body>
 
