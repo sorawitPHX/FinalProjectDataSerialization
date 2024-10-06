@@ -72,7 +72,7 @@ router.get('/', async (req, res) => {
         let totalResult = 0
         let currentPageUrl = null
         let pages = []
-        if(pages) {
+        if (pages) {
             pages[currentPage] = null
         }
         let nextPage = null
@@ -116,6 +116,25 @@ router.get('/', async (req, res) => {
         res.send({ error })
         console.log(error)
     }
+})
+
+router.get('/scholar/api', async (req, res) => {
+    const msg = req.query.msg
+    const status = req.query.status
+    const start = await parseInt(req.query.start) || 0
+    const limit = await parseInt(req.query.limit) || 12
+    const q = await req.query.q || ''
+    const scholar_api_key = process.env.GOOGLE_SCHOLAR_API_KEY
+    const scholar_keyword = `author:"งามนิจ อาจอินทร์" OR author:"Ngamnij Arch-int"` + ` ${q}`
+    const scholar_url = `https://serpapi.com/search.json?engine=google_scholar&q=${encodeURIComponent(scholar_keyword)}&api_key=${scholar_api_key}&start=${start}&num=${limit}`
+    let response = await fetch(scholar_url, {
+        method: 'GET',
+    })
+    if (!response.ok) {
+        res.send(response)
+    }
+    let scholar_project = await response.json()
+    res.send(scholar_project)
 })
 
 // เส้นทางสำหรับการอัปเดตข้อมูล
