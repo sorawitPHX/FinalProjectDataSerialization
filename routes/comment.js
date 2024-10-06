@@ -5,8 +5,15 @@ var Comment = require('../models/comment');
 const multer = require('multer');
 const path = require('path');
 
-
-const users = {username: 'notistz', pImg: 'uploads/news/image-1728110603224.jpeg'}
+const storage = multer.diskStorage({
+    destination: './public/uploads/comment/',
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+  });
+  const upload = multer({ storage: storage }).single('commentImg'); // รับเฉพาะไฟล์เดียวจากฟิลด์ 'commentImg'
+  
+  const users = {username: 'notistz', pImg: 'uploads/news/image-1728110603224.jpeg'}
 
 
 router.get('/', async function (req, res, next) {
@@ -20,7 +27,7 @@ router.get('/', async function (req, res, next) {
     }
     : {};
 
-
+    const allcomment = await Comment.find();
     const commentList = await Comment.find(searchOptions).sort({ date: -1 });
 
     res.render('comments', { 
@@ -29,6 +36,7 @@ router.get('/', async function (req, res, next) {
         activePage: 'index',
         search,
         commentList,
+        allcomment,
         users
     }); 
 });
@@ -88,5 +96,44 @@ router.post('/replyComment/:id', (req, res) => {
         res.status(500).send('Error deleting the Comments');
     }
   });
+
+  router.post('/updateComment', (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            res.status(400).send({ err })
+        } else {
+            let path = ''
+            if (req.file == undefined) {
+                if (req.body.comment_img_path) {
+                    path = req.body.comment_img_path
+                } else {
+                    res.status(400).send({ msg: 'No any img path' })
+                }
+            } else {
+                path = `uploads/comment/${req.file.filename}`
+            }
+            try {
+                const updatedComment = await Comment.findByIdAndUpdate(
+                    req.body.id,
+                    {
+                        content: req.body.content,
+                        image: path,
+                    },
+                    { new: true } // Return the updated document
+                );
+
+                if (!updatedComment) {
+                    return res.status(404).send('News not found');
+                }
+                res.redirect('/comments');
+            } catch (err) {
+                console.error(err);
+                res.status(500).send('Error updating the News');
+            }
+        }
+    });
+});
+
+
 
 module.exports = router;

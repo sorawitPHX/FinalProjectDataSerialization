@@ -43,9 +43,7 @@
     <thead>
         <tr class="text-center">
             <th>
-                <span class="custom-checkbox">
-                    <input class="form-check-input" onclick="toggleSelectAll(this)" type="checkbox" id="selectAll">
-                </span>
+                ลำดับ
             </th>
             <th>หัวข้อข่าวสาร</th>
             <th>เนื้อหา</th>
@@ -58,7 +56,7 @@
             <% newsList.forEach((news, index) => { %>
                 <tr>
                     <td class="text-center">
-                        <input type="checkbox">
+                        <%= index+1 %>
                     </td>
                     <td class="newsTitle"><%= news.title %></td> 
                     <td class="newsContent"><%= news.content %></td> 
