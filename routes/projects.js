@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const User = require('../models/User')
 const Project = require('../models/Project')
 const Scholar = require('../models/Scholar')
 const multer = require('multer')
@@ -62,10 +63,9 @@ router.get('/', async (req, res) => {
             res.send(response)
         }
         let scholar_project = await response.json()
-        // let scholar_project = await Scholar.find()
-        // scholar_project = scholar_project[0]
-        // return res.send(scholar_project)
-        // return res.send(scholar_project.serpapi_pagination)
+
+        const user = await User.findOne()
+
         let projects = []
         let pagination = null
         let currentPage = 1
@@ -97,11 +97,8 @@ router.get('/', async (req, res) => {
         }
         // log(scholar_project)
 
-
-
         // const totalPage = Math.ceil(scholar_project.search_information.total_results / limit)
         // let projects = await Project.find(searchOptions).skip(skip).limit(limit)
-
 
         // const msg = req.query.msg
         // const limit = parseInt(req.query.limit) || 12
@@ -111,7 +108,7 @@ router.get('/', async (req, res) => {
         // let projects = await Project.find(searchOptions).skip(skip).limit(limit)
         // const totalPage = Math.ceil(projectCount / limit)
 
-        res.render('project', { title: 'งานวิจัยและโครงงาน', activePage: 'project', projects, status, msg, limit, q, currentPage, pages, nextPage, prevPage, totalResult })
+        res.render('project', { title: 'งานวิจัยและโครงงาน', activePage: 'project', projects, status, msg, limit, q, currentPage, pages, nextPage, prevPage, totalResult, user })
     } catch (error) {
         res.send({ error })
         console.log(error)
