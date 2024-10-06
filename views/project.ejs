@@ -57,7 +57,7 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
                 <% projects.forEach((project, index)=> { %>
                     <div class="col">
-                        <div class="card h-100 rounded-4">
+                        <div class="card h-100 rounded-4 kanit-light">
                             <div class="card-header h-100 rounded-top-4">
                                 <div class="text-center">
                                     <h1 class="mb-3">
@@ -68,8 +68,6 @@
                                     </h5>
                                 </div>
                             </div>
-                            <!-- <img src="<%= project.project_img_path %>" class="card-img-top"
-                        alt="Imgage of <%= project.project_name %>"> -->
                             <div class="card-body">
                                 <p class="card-text">
                                 <div class="">
@@ -88,7 +86,9 @@
                                     <div class="text-center">
                                         บทคัดย่อ
                                     </div>
-                                    <%= project.snippet %>
+                                    <div class="">
+                                        <%= project.snippet %>
+                                    </div>
                                         <hr>
                                         <div class="text-center">
                                             <div>
