@@ -103,43 +103,42 @@
                 </ul>
 
                 <!-- ปุ่มสำหรับเปิด Modal -->
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
-                    Update
-                </button>
+<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
+    Update
+</button>
 
-                <!-- Modal สำหรับการอัปเดตข้อมูล -->
-                <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="updateModalLabel">Update User Information</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div> 
-                            <div class="modal-body">
-                                <form action="/update-user/<%= user._id %>" method="POST">
-                                    <div class="form-group">
-                                        <label for="description_en">Description:</label>
-                                        <textarea class="form-control" id="description_en" name="description_en" rows="3"><%= user.description_en || "" %></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="expertIns">Expert Insights (comma-separated):</label>
-                                        <input type="text" class="form-control" id="expertIns" name="expertIns" value="<%= user.expertIns.join(', ') || "" %>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="rewards">Rewards (comma-separated):</label>
-                                        <input type="text" class="form-control" id="rewards" name="rewards" value="<%= user.rewards.join(', ') || "" %>">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                </form>                                                          
-                            </div>
-                        </div>
+<!-- Modal สำหรับการอัปเดตข้อมูล -->
+< class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update User Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/update-user/<%= user._id %>" method="POST">
+                    <div class="form-group">
+                        <label for="description_en">Description:</label>
+                        <textarea class="form-control" id="description_en" name="description_en" rows="3"></textarea>
+                        <button type="button" class="btn btn-danger" onclick="document.getElementById('description_en').value = '';">Delete</button>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="expertIns">Expert Insights (comma-separated):</label>
+                        <input type="text" class="form-control" id="expertIns" name="expertIns" value="">
+                        <button type="button" class="btn btn-danger" onclick="document.getElementById('expertIns').value = '';">Delete</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="rewards">Rewards (comma-separated):</label>
+                        <input type="text" class="form-control" id="rewards" name="rewards" value="">
+                        <button type="button" class="btn btn-danger" onclick="document.getElementById('rewards').value = '';">Delete</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
             </div>
         </div>
-    </div>
 
 
         <div class="card mb-3" style="border: none; border-radius: 0;">
@@ -227,9 +226,16 @@
             </div>
             <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                 <div class="card-body" style="background-color: #f3e8ff;">
-                    ...
+                    <ul>
+                        <% projects.forEach(project => { %>
+                            <li>
+                                <strong><a href="<%= project.link %>" class="no-underline"><%= project.title %></a></strong>
+                            </li>
+                        <% }); %>
+                    </ul>
                 </div>
             </div>
+            
         </div>
 
 

@@ -248,3 +248,7 @@ display: block;
 .comment-icon:hover {
   color: grey;
 }
+.no-underline {
+  text-decoration: none; /* ลบเส้นใต้ */
+}
+

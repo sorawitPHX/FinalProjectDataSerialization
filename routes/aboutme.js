@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
+const Project = require('../models/Project'); // เพิ่มการนำเข้า Model ของ Project
 
 /* GET about page. */
 router.get('/', async function (req, res, next) {
@@ -10,13 +11,18 @@ router.get('/', async function (req, res, next) {
         if (!user) {
             return res.status(404).send({ message: 'ไม่พบข้อมูลผู้ใช้' });
         }
-        res.render('aboutme', { user }); // ส่งข้อมูล user ไปยัง View
+
+        // ดึงข้อมูลโปรเจ็กต์จากฐานข้อมูล
+        const projects = await Project.find(); // หรือสามารถกรองตามเงื่อนไขที่ต้องการได้
+
+        res.render('aboutme', { user, projects }); // ส่งข้อมูล user และ projects ไปยัง View
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'เกิดข้อผิดพลาดในการดึงข้อมูลผู้ใช้' });
+        res.status(500).send({ message: 'เกิดข้อผิดพลาดในการดึงข้อมูล' });
     }
 });
 
+// ส่วนที่เกี่ยวข้องกับการอัปเดตผู้ใช้
 router.post('/update-user/:id', async function (req, res, next) {
     try {
         const userId = req.params.id; // ดึง id ของผู้ใช้จาก URL
