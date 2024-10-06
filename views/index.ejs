@@ -45,6 +45,11 @@
       <div class="section-header">
         <br>
         <h2 class="news h">ข่าวสาร</h2>
+        <% if(loggedUser) { %>
+          <% if(loggedUser.role == 'super admin') { %>
+            <button class="btn btn-dark">จัดการข่าวสาร</button>
+          <% } %>
+        <% } %>
         <br>
       </div>
       <div class="row gy-4">

@@ -18,7 +18,7 @@ const authenticateToken = (req, res, next) => {
     } else {
         // ถ้าไม่พบ token ให้ redirect ไปยังหน้า login
         paths = ['/insertNews/', '/insertNews']
-        if ( paths.includes(req.path)) {
+        if ( paths.includes(req.path) && (req.method === 'GET' || req.method === 'POST')) {
             return res.redirect('/auth/login');
         }
         next();

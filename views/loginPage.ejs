@@ -59,28 +59,30 @@
         <div class="card" style="width: 80%; max-width: 800px;">
             <div class="row g-0">
                 <!-- Video Section -->
-                <div class="col-md-4 d-none d-lg-block video-container">
+                <div class="col-lg-4 d-flex video-container">
                     <video autoplay loop muted playsinline>
                         <source src="/videos/jellyFish_verti.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
                 <!-- Form Section -->
-                <div class="col-lg-6 d-flex align-items-center justify-content-center text-black form-section">
+                <div class="col-lg-8 d-flex align-items-center justify-content-center text-black form-section ">
                     <div class="px-5">
                         <div class="logo mb-4">
                             <i class="fas fa-crow fa-2x me-3" style="color: #709085;"></i>
                             <span class="h1 fw-bold mb-0">เข้าสู่ระบบ</span>
                         </div>
                         <form id="loginForm" style="width: 100%; max-width: 400px;">
-                            <div class="form-outline mb-4">
-                                <input type="email" name="email" id="form2Example18" class="form-control form-control-lg" required autocomplete />
-                                <label class="form-label" for="form2Example18">อีเมล</label>
+                            <div class="form-floating mb-4">
+                                <input type="email" name="email" id="email"
+                                    class="form-control form-control-lg" required />
+                                <label class="form-label" for="email">อีเมล</label>
                             </div>
 
-                            <div class="form-outline mb-4">
-                                <input type="password" name="password" id="form2Example28" class="form-control form-control-lg" autocomplete required />
-                                <label class="form-label" for="form2Example28">รหัสผ่าน</label>
+                            <div class="form-floating mb-4">
+                                <input type="password" name="password" id="password"
+                                    class="form-control form-control-lg" required />
+                                <label class="form-label" for="password">รหัสผ่าน</label>
                             </div>
 
                             <div class="form-check mb-4 remember-me-label">
@@ -136,6 +138,34 @@
             } else {
                 alert(result.message || 'เข้าสู่ระบบล้มเหลว');
             }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // ตรวจสอบว่า remember me เปิดอยู่หรือไม่ ถ้าใช่ให้ auto fill email/password
+            const emailField = document.getElementById("email");
+            const passwordField = document.getElementById("password");
+            const rememberMeCheckbox = document.getElementById("rememberMe");
+
+            // โหลดค่าจาก Local Storage ถ้ามี
+            if (localStorage.getItem("rememberMe") === "true") {
+                emailField.value = localStorage.getItem("email");
+                passwordField.value = localStorage.getItem("password");
+                rememberMeCheckbox.checked = true;
+            }
+
+            // เมื่อคลิกปุ่ม Submit เก็บค่าลง Local Storage
+            document.getElementById("loginForm").addEventListener("submit", () => {
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem("email", emailField.value);
+                    localStorage.setItem("password", passwordField.value);
+                    localStorage.setItem("rememberMe", "true");
+                } else {
+                    // ถ้าไม่ได้เลือก remember me, ลบข้อมูลออกจาก Local Storage
+                    localStorage.removeItem("email");
+                    localStorage.removeItem("password");
+                    localStorage.setItem("rememberMe", "false");
+                }
+            });
         });
     </script>
 </body>
