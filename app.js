@@ -17,6 +17,7 @@ const aboutmeRoute = require('./routes/aboutme');
 const projectRouter = require('./routes/projects');
 const searchScoreRouter = require('./routes/searchScore');
 const insertNews = require('./routes/insertNews');
+const commentRouter = require('./routes/comment.js');
 
 
 const app = express();
@@ -64,6 +65,7 @@ app.use('/aboutme', aboutmeRoute);
 app.use('/project', projectRouter)
 app.use('/insertNews', insertNews)
 app.use('/searchScore', searchScoreRouter)
+app.use('/comments', commentRouter);
 
 
 // Catch 404

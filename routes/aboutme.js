@@ -17,7 +17,7 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.put('/update-user/:id', async function (req, res, next) {
+router.post('/update-user/:id', async function (req, res, next) {
     try {
         const userId = req.params.id; // ดึง id ของผู้ใช้จาก URL
         const newData = req.body; // ข้อมูลใหม่ที่ส่งมาจาก Client
