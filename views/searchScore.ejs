@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="th">
+    <!DOCTYPE html>
+    <html lang="th">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IT Scoring - Scores</title>
+        <meta name="csrf-token" content="vtYyBI34xLL0DdiMmL00kLmuN6wvIjJpqKgRL4zh">
+    
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sarabun:300,400,600,700&display=swap">
+        <link rel="stylesheet" href="https://it.wwry.net/lte/plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="https://it.wwry.net/lte/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="https://it.wwry.net/lte/plugins/sweetalert2/sweetalert2.min.css">
+    
+        <!-- Custom CSS -->
+        <style>
+            body {
+                font-family: 'Sarabun', Arial, Helvetica, sans-serif;
+                background-color: #f8f9fa;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .wrapper {
+                flex: 1;
+            }
+            .breadcrumbs {
+                background-image: url('/img/bg_web.png');
+                height: 70vh;
+                background-size: cover;
+                background-position: center;
+            }
+            .breadcrumbs h2 {
+                color: white;
+                margin-top: 20%;
+            }
+            .search-container {
+                margin-top: -50px; /* Pull the search box up */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .search-box {
+                background: #fff;
+                padding: 40px;
+                border-radius: 15px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s, box-shadow 0.3s;
+                width: 100%;
+                max-width: 400px;
+            }
+            .search-box:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            }
+            .search-button {
+                width: 100%;
+                padding: 12px;
+                font-size: 16px;
+                border: none;
+                border-radius: 8px;
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .search-button:hover {
+                background-color: #0056b3;
+            }
+            .form-group label {
+                font-weight: 600;
+            }
+            footer {
+                background-color: #343a40;
+                color: #ffffff;
+                padding: 15px 0;
+                text-align: center;
+            }
+            footer a {
+                color: #ffc107;
+                text-decoration: none;
+            }
+            footer a:hover {
+                text-decoration: underline;
+            }
+            /* Responsive Adjustments */
+            @media (max-width: 576px) {
+                .search-box {
+                    padding: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+
+    
+            <!-- Search Form -->
+            <section class="content search-container">
+                <div class="search-box">
+                    <h2 class="pt-4">คะแนนคาบปฏิบัติการ</h2>
+                    <form method="GET" action="https://it.wwry.net/myscore" id="scoreForm" aria-label="Form ค้นหาคะแนนนักศึกษา">
+                        <input type="hidden" name="_token" value="vtYyBI34xLL0DdiMmL00kLmuN6wvIjJpqKgRL4zh">
+                        <div class="form-group">
+                            <label for="id">รหัสนักศึกษา</label>
+                            <input type="text" class="form-control" name="id" id="id" placeholder="รหัสนักศึกษา 65XXXXXXX-X" required aria-required="true" aria-describedby="studentIdHelp">
+                            <small id="studentIdHelp" class="form-text text-muted">กรุณากรอกรหัสนักศึกษาที่ถูกต้อง</small>
+                        </div>
+                        <button type="submit" class="btn search-button mt-3">ค้นหา</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    
+        <!-- JS Scripts -->
+        <script src="https://it.wwry.net/lte/plugins/jquery/jquery.min.js"></script>
+        <script src="https://it.wwry.net/lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="https://it.wwry.net/lte/dist/js/adminlte.min.js"></script>
+        <script src="https://it.wwry.net/lte/plugins/sweetalert2/sweetalert2.min.js"></script>
+    
+        <!-- Optional JavaScript for Enhancements -->
+        <script>
+            $(document).ready(function(){
+                $('#scoreForm').on('submit', function(e){
+                    // แสดง SweetAlert2 เมื่อแบบฟอร์มถูกส่ง
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'กำลังค้นหา...',
+                        text: 'กรุณารอสักครู่',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        timer: 1500
+                    });
+                });
+            });
+        </script>
+    </body>
+    </html>
+    
+</html>

@@ -1,19 +1,12 @@
-const express = require('express');
-const router = express.Router();
+// routes/about.js
+var express = require('express');
+var router = express.Router();
+const User = require('../models/User');
 
-// ตัวอย่างข้อมูลเริ่มต้น
-let storyContent = "This is เกี่ยวกับฉัน";
-
-// เส้นทางสำหรับหน้า About
-router.get('/', (req, res) => {
-    
-    res.render('aboutme', { title: 'เกี่ยวกับฉัน', content: storyContent, activePage: 'aboutme' });
+/* GET about page. */
+router.get('/', async function (req, res, next) {
+    // สามารถดึงข้อมูลผู้ใช้จากฐานข้อมูลถ้าจำเป็น
+    const user = await User.findOne(); // แก้ไขตามความจำเป็น
+    res.render('aboutme', { user }); // ส่งข้อมูล user ไปยัง View
 });
-
-// เส้นทางสำหรับการอัปเดตข้อมูล
-router.post('/update', (req, res) => {
-    storyContent = req.body.story; // อัปเดตเนื้อหาของ storyContent
-    res.redirect('/aboutme'); // เปลี่ยนเส้นทางกลับไปยังหน้า About Me
-});
-
 module.exports = router;

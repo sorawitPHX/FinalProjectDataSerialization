@@ -51,6 +51,11 @@ const userSchema = new mongoose.Schema({
     rewards : Array,
     educations: Array,
     experiences: Array,
+    expertIns : Array,
+    expertise: {
+        type: String,
+        required: false,
+    },
     
 }, {timestamps: true});
 

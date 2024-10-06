@@ -1,3 +1,30 @@
+<div class="admin-view" onload="alertRes()">
+  <% if (typeof status !=='undefined' && typeof msg !=='undefined' ) { %>
+    <script>
+        window.onload = () => {
+            let status = `<%= status %>`
+            let msg = `<%= msg %>`
+            if (status == 'success') {
+                Swal.fire({
+                    title: "ดำเนินการสำเร็จ",
+                    text: msg,
+                    icon: "success"
+                }).then((result) => {
+                    window.location.href = '/'
+                })
+            } else {
+                Swal.fire({
+                    title: "เกิดข้อผิดพลาด",
+                    text: msg,
+                    icon: "warning"
+                }).then((result) => {
+                    window.location.href = '/'
+                })
+            }
+        }
+    </script>
+  <% } %>
+</div>
 <div class="breadcrumbs">
   <div class="page-header d-flex align-items-center"
     style="background-image: url('/img/bg_web.png'); height: 70vh; background-size: cover; background-position: center;">
@@ -12,11 +39,37 @@
   </div>
 </div>
 
-<!-- Content to test scrolling -->
 <div class="container" style="margin-top: 100px;">
+  <section id="service" class="services pt-0 mb-3">
+    <div class="container aos-init aos-animate" data-aos="fade-up">
+      <div class="section-header">
+        <br>
+        <h2 class="news h">ข่าวสาร</h2>
+        <br>
+      </div>
+      <div class="row gy-4">
+        <% if (newsList.length > 0) { %> 
+          <% newsList.forEach((news) => { %> 
+            <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+              <div class="card">
+                <img src="<%= news.image ? '/' + news.image : '/img/test.png' %>" style="height: 300px; object-fit: cover;" class="card-img-top" alt="News Image" />
+                <div class="card-body">
+                  <h3 class="card-title"><a href="#"><%= news.title %></a></h3>
+                  <p><%= news.content.substring(0, 100) %>...</p> <!-- ตัดข้อความเพื่อแสดงแค่ 100 ตัวอักษร -->
+                </div>
+              </div>
+            </div><!-- End Card Item -->
+          <% }); %> 
+        <% } else { %>
+          <p class="text-center">ไม่มีข่าวสารที่จะแสดง</p>
+        <% } %>
+      </div>
+    </div>
+  </section>
+  
   <!-- <h1>ผลงานทางวิชาการ  (ผลงาน 5 ปี ย้อนหลัง 2560-2564)</h1>
   <br> -->
-  <h2>ตำรา หนังสือ และเอกสารประกอบการสอน</h2>
+  <h2 class="h">ตำรา หนังสือ และเอกสารประกอบการสอน</h2>
   <br>
   <main id="main">
     <!-- ======= Services Section ======= -->
@@ -69,7 +122,6 @@
               </div>
             </div>
           </div><!-- End Card 3 -->
-    
         </div><!-- End row -->
       </div><!-- End container -->
     </section><!-- End Services Section -->
@@ -80,10 +132,9 @@
       <div class="container aos-init aos-animate" data-aos="fade-up">
         <div class="section-header">
           <br>
-          <h2>งานวิจัย และบทความทางวิชาการ</h2>
+          <h2 class="h">งานวิจัย และบทความทางวิชาการ</h2>
           <br>
         </div>
-
         <div class="row gy-4">
           <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
             <div class="card">
@@ -134,5 +185,207 @@
         </div>
       </div>
     </section><!-- End Research Published Section -->
+
+
+    <!-- community -->
+    <!-- Modal -->
+    <div class="modal fade" id="commentForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/insertComment" method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" value="<%= users.username %>" required>
+                <input type="hidden" class="form-control" id="Puser" name="Puser" value="<%= users.pImg %>">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="content" name="content" required></textarea>
+              </div>
+              <div class="input-group mb-3">
+                <input type="file" accept="image/png, image/gif, image/jpeg" class="form-control" id="commentImg" name="commentImg">
+                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Submit">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section id="service" class="services pt-0">
+      <div class="container aos-init aos-animate" data-aos="fade-up">
+        <div class="section-header">
+          <h2 class="h community">ชุมชน</h2>
+        </div>
+        <div class="d-flex justify-content-end">        
+        <button type="button" class="btn btn-success my-3 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#commentForm">
+          Post <i class="bi bi-cursor-fill mx-1"></i>
+        </button></div>
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 aos-init aos-animate comment-con" data-aos="fade-up" data-aos-delay="100">
+            
+            <% if (commentList.length > 0) { %>
+              <% commentList.forEach((comment) => { %>
+
+                <!-- Reply Modal -->
+                <div class="modal fade" id="Reply_<%= comment._id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-xl reply-modal">
+                    <div class="modal-content">
+
+                      <div class="modal-body">
+                        <div class="comment-header">
+                          <img src="<%= comment.PImg %>" alt="Profile Pic" class="profile-pic">
+                          <div>
+                            <h3><%= comment.username %></h3>
+                            <span><%= comment.date.toLocaleString() %></span>
+                          </div>
+                        </div>
+                        <div class="reply-modal-body">
+                          <div class="reply-modal-text"><%= comment.content.substring(0, 100) %></div>
+                          <% if (comment.image !== 'img/no_image.jpg') { %>
+                            <div style="text-align: center;"><img src="<%= comment.image %>" alt="Image" class="reply-modal-image align-middle mb-3"></div>
+                          <% } %>
+                        </div>
+                        <div class="actions">
+                          <i class="bi bi-hand-thumbs-up-fill like-icon" onclick="likeComment('<%= comment._id %>', this)"></i>
+                          <span class="like-count"><%= comment.likes %></span>
+                          <i class="bi bi-chat-dots-fill comment-icon"></i>
+                          <span class="comment-count"><%= comment.replies.length %></span>
+                        </div>
+
+                        <!-- Reply Form -->
+                        <div id="replyForm-<%= comment._id %>" class="reply-form my-3">
+                          <form action="/replyComment/<%= comment._id %>" method="POST">
+                            <input type="hidden" name="username" value="<%= users.username %>">
+                            <input type="hidden" name="Puser" value="<%= users.pImg %>">
+                            <textarea name="content" class="form-control" placeholder="write a reply..." style="height: 100px; resize: none;" required></textarea>
+                            <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-reply"></i> ตอบกลับ</button>
+                          </form>
+                        </div>
+                          <div class="replies">
+                            <% if (comment.replies && comment.replies.length > 0) { %>
+                              <hr>
+                              <h5>Replies:</h5>
+                              <% comment.replies.forEach((reply) => { %>
+                                <div class="reply-box">
+                                  <div class="reply-header">
+                                    <img src="<%= reply.PImg %>" alt="Profile Pic" class="profile-pic">
+                                    <div>
+                                      <div>@<%= reply.username %> <span><%= reply.date.toLocaleString() %></span></div>
+                                    <p><%= reply.content %></p>
+                                    </div>
+                                  </div>
+                                  <div class="reply-body">
+                                  </div>
+                                </div>
+                              <% }); %>
+                            <% } %>
+                          </div>
+                          <div class="modal-footer">
+                            <button onclick="" class="btn btn-outline-warning">แก้ไข</button>
+                            <button onclick="deleteComment(['<%= comment._id %>'])" class="btn btn-outline-danger">ลบ</button>
+                            <input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="ปิด">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="comment-box">
+                  <div class="comment-header">
+                    <img src="<%= comment.PImg %>" alt="Profile Pic" class="profile-pic">
+                    <div>
+                      <h3><%= comment.username %></h3>
+                      <span><%= comment.date.toLocaleString() %></span>
+                    </div>
+                    <div class="menu-icon">
+                      <span class="toggleAction" onclick="toggleActionMenu('<%= comment._id %>')" >&#x22EE;</span>
+                      <ul class="list-group cm-dot" id="cm-<%= comment._id %>" style="display: none; z-index: 99;">
+                        <li class="list-group-item">edit</li>
+                        <li class="list-group-item" onclick="deleteComment(['<%= comment._id %>'])">delete</li>
+                      </ul>
+                    </div>
+
+                  </div>
+                  <div class="comment-body">
+                    <div class="comment-text"><%= comment.content.substring(0, 100) %></div>
+                    <% if (comment.image !== 'img/no_image.jpg') { %>
+                      <img src="<%= comment.image %>" alt="Image" class="comment-image">
+                    <% } %>
+                  </div>
+                  <div class="actions">
+                    <i class="bi bi-hand-thumbs-up-fill like-icon" onclick="likeComment('<%= comment._id %>', this)"></i>
+                    <span class="like-count"><%= comment.likes %></span>
+                    <i class="bi bi-chat-dots-fill comment-icon" 
+                      data-bs-toggle="modal"
+                      data-bs-target="#Reply_<%= comment._id %>"
+                      data-username="<%= comment.username %>"
+                      data-PImg="<%= comment.PImg %>"
+                      data-content="<%= comment.content %>"
+                      data-date="<%= comment.date %>"
+                      data-likes="<%= comment.likes %>"
+                      data-replies="<%= comment.replies %>"
+                      data-image="<%= comment.image ? '/' + comment.image : 'img/no_image.jpg' %>">
+                    </i>
+                    <span class="comment-count"><%= comment.replies.length %></span>
+                  </div>
+                </div>
+
+
+              <% }); %>
+            <% } else { %>
+              <p class="text-center">ไม่มีความคิดเห็น</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+        function likeComment(commentId, likeIcon) {
+            fetch(`/likeComment/${commentId}`, {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    // Refresh the page after successfully liking the comment
+                    window.location.reload();
+                } else {
+                    console.error('Error liking the comment');
+                }
+            }).catch(error => {
+                console.error('Network error:', error);
+            });
+        }
+        function toggleActionMenu(commentId) {
+          const ActioToggleForm = document.getElementById('cm-' + commentId);
+          ActioToggleForm.style.display = ActioToggleForm.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        function deleteComment(data) {
+                        Swal.fire({
+                            title: `ลบข้อมูลลำดับที่หรือไม่?`,
+                            text: "หากคุณลบแล้วจะไม่สามารถกู้คืนได้!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/commentDelete/' + data[0]
+                            }
+                        });
+                    }
+    </script>
   </main>
 </div>

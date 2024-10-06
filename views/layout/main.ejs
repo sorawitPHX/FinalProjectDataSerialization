@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
     <meta charset="UTF-8" />
@@ -39,11 +39,11 @@
     </style>
 </head>
 
-<body>
+<body class="fade-page">
     <!-- Fixed Top Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg p-3">
         <div class="container">
-            <a class="navbar-brand text-uppercase fw-bold" href="#">Ngamnij Arch-int</a>
+            <a class="navbar-brand text-uppercase fw-bold" href="/">Ngamnij Arch-int</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -66,8 +66,12 @@
                                 href="/aboutme">เกี่ยวกับเรา</a>
                         </li>
                         <li class="nav-item ms-4">
-                            <a id="login" class="btn btn-outline-dark<%= activePage === 'login' ? 'active' : '' %>"
-                                href="#">เข้าสู่ระบบ</a>
+                            <a class="nav-link <%= activePage == 'searchScore' ? 'active' : '' %> "
+                                href="/searchScore">ตรวจสอบคะแนน</a>
+                        </li>
+                        <li class="nav-item ms-4">
+                          <a id="login" class="btn btn-outline-dark<%= activePage === 'login' ? 'active' : '' %>"
+                              href="/login">เข้าสู่ระบบ</a> <!-- เปลี่ยนจาก Modal เป็นลิงก์ -->
                         </li>
                     </ul>
             </div>
@@ -83,9 +87,41 @@
     <footer class="footer mt-5 py-3 bg-dark text-white">
         <div class="container text-center">
             <p>© 2024 Ngamnij Arch-int. All rights reserved.</p>
+            <p id="current-date"></p> <!-- แสดงวันที่ปัจจุบัน -->
         </div>
     </footer>
 
+    <!-- Modal ล็อกอิน -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header"> 
+            <h5 class="modal-title" id="loginModalLabel">เข้าสู่ระบบ</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="ปิด"></button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">ชื่อผู้ใช้</label>
+                <input type="text" class="form-control" id="username" placeholder="กรอกชื่อผู้ใช้" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">รหัสผ่าน</label>
+                <input type="password" class="form-control" id="password" placeholder="กรอกรหัสผ่าน" required>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">จดจำฉันไว้</label>
+              </div>
+              <button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- JavaScript to display current date -->
     <script>
@@ -105,19 +141,24 @@
         const links = document.querySelectorAll('a.nav-link, a.btn'); // เลือกทุกลิงก์
         links.forEach(link => {
             link.addEventListener('click', function (e) {
+                // ตรวจสอบว่าลิงก์นี้เปิด Modal หรือไม่
+                if(this.getAttribute('data-bs-toggle') === 'modal') {
+                    // ไม่ทำการเปลี่ยนหน้า
+                    return;
+                }
+
                 e.preventDefault(); // ป้องกันการนำทางทันที
                 const href = this.href; // เก็บลิงก์ปลายทาง
 
                 // เริ่มเฟดออก
                 document.body.classList.remove('show');
 
-                // หน่วงเวลา 500ms แล้วเปลี่ยนหน้า
+                // หน่วงเวลา 150ms แล้วเปลี่ยนหน้า
                 setTimeout(function () {
                     window.location.href = href; // นำทางไปยังหน้าปลายทาง
-                }, 150); // ระยะเวลาเฟดออก 0.5 วินาที
+                }, 150); // ระยะเวลาเฟดออก 0.15 วินาที
             });
         });
-
     </script>
 
     <!-- Bootstrap JS and dependencies -->
@@ -141,6 +182,69 @@
                 login_btn.classList.add('btn-outline-dark')
             }
         })
+    </script>
+
+    <!-- JavaScript สำหรับจัดการฟอร์มล็อกอิน -->
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
+
+        // ดึงค่าจากฟอร์ม
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        // ตรวจสอบข้อมูลเบื้องต้น
+        if(username === '' || password === '') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'ข้อผิดพลาด',
+            text: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน',
+          });
+          return;
+        }
+
+        // ตัวอย่างการส่งข้อมูลไปยังเซิร์ฟเวอร์ด้วย AJAX (ใช้ Fetch API)
+        fetch('/login', { // เปลี่ยน URL ให้ตรงกับเส้นทางที่เซิร์ฟเวอร์ของคุณรองรับ
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.success) {
+            // ปิด Modal
+            var loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            loginModal.hide();
+
+            // แสดงข้อความสำเร็จ
+            Swal.fire({
+              icon: 'success',
+              title: 'สำเร็จ',
+              text: 'เข้าสู่ระบบสำเร็จ!',
+            }).then(() => {
+              // เปลี่ยนหน้าเว็บหรือรีเฟรชหน้า
+              window.location.href = '/dashboard'; // เปลี่ยนเส้นทางตามต้องการ
+            });
+          } else {
+            // แสดงข้อผิดพลาดจากเซิร์ฟเวอร์
+            Swal.fire({
+              icon: 'error',
+              title: 'ข้อผิดพลาด',
+              text: data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'ข้อผิดพลาด',
+            text: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ',
+          });
+        });
+      });
     </script>
 </body>
 
