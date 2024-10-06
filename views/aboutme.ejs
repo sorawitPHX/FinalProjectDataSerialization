@@ -10,7 +10,43 @@
 </head>
 
 <body>
-    <%- include('partial/banner') %>
+    <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center"
+        style="background-image: url('/img/bg_web_adoutMe.png'); height: 70vh; background-size: cover; background-position: center; position: relative;">
+            <!-- Add a subtle gradient overlay for better text visibility -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.1);"></div>
+            
+            <div class="container position-relative z-index-1">
+                <div class="row d-flex align-items-center">
+                    <!-- คอลัมน์สำหรับแสดงข้อความ -->
+                    <div class="col-lg-8 text-start">
+                        <h1 id="text"
+                            style="color: white; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); font-weight: bold;">
+                            <%= user.firstname_th || "" %> <%= user.lastname_th || "" %>
+                        </h1>
+                        <h1 id="text"
+                            style="color: white; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); font-weight: bold;">
+                            <%= user.firstname_en || "" %> <%= user.lastname_en || "" %>
+                        </h1>
+                        <div class="text-dark p-4 rounded mt-4"
+                            style="background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); max-width: 800px;">
+                            <p style="line-height: 1.6;">
+                                <%= user.description_th || "" %>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- คอลัมน์สำหรับแสดงรูปภาพ -->
+                    <div class="col-lg-4 text-end">
+                        <div class="image-container">
+                            <img src="/img/bg_web_Photo_Ngamnit.png" alt="Your Image" class="right-image" style="max-width: 100%; border-radius: 10px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
     <div>
     <h2 class="text-center mt-4" style="color: #6f2c91; font-weight: bold;">ข้อมูลส่วนตัว</h2>
 </div>
@@ -72,88 +108,137 @@
                 </ul>
 
                 <!-- ปุ่มสำหรับเปิด Modal -->
-<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
-    Update
-</button>
-
-<!-- Modal สำหรับการอัปเดตข้อมูล -->
-< class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update User Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <!-- ปุ่มที่ใช้ inline style -->
+                <button type="button" class="btn" style="background-color:#6f2c91; color: white; border: none;" data-toggle="modal" data-target="#updateModal">
+                    Update
                 </button>
-            </div>
-            <div class="modal-body">
-                <form action="/update-user/<%= user._id %>" method="POST">
-                    <div class="form-group">
-                        <label for="description_en">Description:</label>
-                        <textarea class="form-control" id="description_en" name="description_en" rows="3"></textarea>
-                        <button type="button" class="btn btn-danger" onclick="document.getElementById('description_en').value = '';">Delete</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="expertIns">Expert Insights (comma-separated):</label>
-                        <input type="text" class="form-control" id="expertIns" name="expertIns" value="">
-                        <button type="button" class="btn btn-danger" onclick="document.getElementById('expertIns').value = '';">Delete</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="rewards">Rewards (comma-separated):</label>
-                        <input type="text" class="form-control" id="rewards" name="rewards" value="">
-                        <button type="button" class="btn btn-danger" onclick="document.getElementById('rewards').value = '';">Delete</button>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </form>
-            </div>
-            </div>
-        </div>
 
 
-        <div class="card mb-3" style="border: none; border-radius: 0;">
-            <div class="card-header" id="headingTwo" style="background-color: #6f2c91; color: white;">
-                <h4 class="mb-0 d-flex justify-content-between align-items-center">
-                    <button class="btn custom-btn" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="false" aria-controls="collapseTwo" style="color: white; font-weight: bold;">
-                        ประวัติการศึกษา
-                    </button>
-                    <span class="icon" style="font-family: 'Font Awesome 5 Free'; font-weight: 900;">&#xf107;</span>
-                    <!-- ลูกศรลง -->
-                </h4>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div class="card-body" style="background-color: #f3e8ff;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>ระดับ</th>
-                                <th>ชื่อปริญญา (สาขาวิชา)</th>
-                                <th>ชื่อสถาบัน</th>
-                                <th>ปี พ.ศ. ที่จบ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% user.educations.forEach(function(education) { %>
-                                <tr>
-                                    <td>
-                                        <%= education.level %>
-                                    </td>
-                                    <td>
-                                        <%= education.degree %>
-                                    </td>
-                                    <td>
-                                        <%= education.institution %>
-                                    </td>
-                                    <td>
-                                        <%= education.graduationYear %>
-                                    </td>
-                                </tr>
-                                <% }); %>
-                        </tbody>
-                    </table>
+                <!-- Modal สำหรับการอัปเดตข้อมูล -->
+                <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateModalLabel">Update User Information</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/aboutme/update-user/<%= user._id %>" method="POST" id="updateForm">
+                                    <!-- Expert Insights -->
+                                    <div class="form-group">
+                                        <label for="expertIns">ความเชี่ยวชาญ :</label>
+                                        <ul id="expertInsList">
+                                            <% user.expertIns.forEach((insight, index) => { %>
+                                                <li style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <span><%= insight %></span>
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteItem('expertIns', <%= index %>, '<%= user._id %>')">
+                                                        Delete
+                                                    </button>
+                                                </li>                                               
+                                            <% }); %>
+                                        </ul>
+                                        <input type="text" class="form-control" id="newExpertIns" name="newExpertIns" placeholder="Add new Expert Insight">
+                                    </div>
+
+                                    <!-- Rewards -->
+                                    <div class="form-group">
+                                        <label for="rewards">Rewards:</label>
+                                        <ul id="rewardsList">
+                                            <% user.rewards.forEach((reward, index) => { %>
+                                                <li style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <%= reward %>
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteItem('rewards', <%= index %>, '<%= user._id %>')">Delete</button>
+                                                </li>                                                
+                                            <% }); %>
+                                        </ul>
+                                        <input type="text" class="form-control" id="newRewards" name="newRewards" placeholder="Add new Reward">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+        
+    <div class="card mb-3" style="border: none; border-radius: 0;">
+        <div class="card-header" id="headingTwo" style="background-color: #6f2c91; color: white;">
+            <h4 class="mb-0 d-flex justify-content-between align-items-center">
+                <button class="btn custom-btn" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: white; font-weight: bold;">
+                    ประวัติการศึกษา
+                </button>
+                <span class="icon" style="font-family: 'Font Awesome 5 Free'; font-weight: 900;">&#xf107;</span>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body" style="background-color: #f3e8ff;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ระดับ</th>
+                            <th>ชื่อปริญญา (สาขาวิชา)</th>
+                            <th>ชื่อสถาบัน</th>
+                            <th>ปี พ.ศ. ที่จบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% user.educations.forEach(function(education) { %>
+                            <tr>
+                                <td><%= education.level %></td>
+                                <td><%= education.degree %></td>
+                                <td><%= education.institution %></td>
+                                <td><%= education.graduationYear %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                <!-- ปุ่ม Update สำหรับเปิด Modal -->
+                <button type="button" class="btn" style="background-color:#6f2c91; color: white; border: none;" data-toggle="modal" data-target="#updateModal">
+                    Update
+                </button>
+    
+                <!-- Modal สำหรับการเพิ่ม ลบ แก้ไขข้อมูลการศึกษา -->
+                <div class="modal fade" id="updateEducationModal" tabindex="-1" role="dialog" aria-labelledby="updateEducationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateEducationModalLabel">Update Education Information</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Form สำหรับอัปเดตข้อมูล -->
+                                <form action="/aboutme/update-education/<%= user._id %>" method="POST" id="updateEducationForm">
+                                    <div class="form-group">
+                                        <label for="level">ระดับการศึกษา:</label>
+                                        <input type="text" class="form-control" name="level" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="degree">ชื่อปริญญา (สาขาวิชา):</label>
+                                        <input type="text" class="form-control" name="degree" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="institution">ชื่อสถาบัน:</label>
+                                        <input type="text" class="form-control" name="institution" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="graduationYear">ปี พ.ศ. ที่จบ:</label>
+                                        <input type="text" class="form-control" name="graduationYear" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <div class="card mb-3" style="border: none; border-radius: 0;">
             <div class="card-header" id="headingThree" style="background-color: #6f2c91; color: white;">
@@ -222,32 +307,70 @@
                 this.style.display = 'none';
             }
         </script>
+        
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('updateForm').addEventListener('submit', function(event) {
-                    event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
-        
-                    const formData = new FormData(this);
-                    const userId = '<%= user._id %>'; // ID ของผู้ใช้
-        
-                    fetch(`/update-user/${userId}`, {
-                        method: 'PUT',
-                        body: formData,
+            // ฟังก์ชันสำหรับการลบข้อมูล
+            function deleteItem(type, index, userId) {
+                if (confirm('คุณแน่ใจว่าต้องการลบข้อมูลนี้หรือไม่?')) {
+                    fetch(`/aboutme/delete-item/${userId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ type, index })
                     })
                     .then(response => {
-                        if (response.ok) {
-                            alert('ข้อมูลอัปเดตสำเร็จ');
-                            // อาจจะเปลี่ยนหน้า หรือทำการอัปเดต UI ที่นี่
-                        } else {
-                            alert('เกิดข้อผิดพลาดในการอัปเดตข้อมูล');
+                        if (!response.ok) {
+                            throw new Error('การลบไม่สำเร็จ');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // ลบรายการที่ถูกลบออกจาก DOM
+                            const listItem = document.querySelector(`#${type}List li:nth-child(${index + 1})`);
+                            listItem.remove();
                         }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
+                        alert(error.message);
                     });
+                }
+            }
+            
+            // ฟังก์ชันสำหรับจัดการการส่งฟอร์มการอัปเดต
+            document.getElementById('updateForm').addEventListener('submit', async function (event) {
+                event.preventDefault(); // หยุดการส่งฟอร์มปกติ
+            
+                const form = event.target;
+                const userId = form.action.split('/').pop(); // ดึง user ID จาก URL
+                const formData = new FormData(form);
+                
+                // แปลงข้อมูลฟอร์มเป็น JSON
+                const newData = {
+                    expertIns: formData.getAll('expertIns'), // ดึงค่า expertIns
+                    rewards: formData.getAll('rewards'),     // ดึงค่า rewards
+                };
+            
+                const response = await fetch(`/aboutme/update-user/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newData), // ส่งข้อมูลใหม่ไปยังเซิร์ฟเวอร์
                 });
+            
+                const result = await response.json();
+            
+                if (result.message === 'อัปเดตข้อมูลสำเร็จ') {
+                    alert(result.message);
+                    // รีเฟรชหน้าหรือไปยังหน้าอื่นหลังจากอัปเดตสำเร็จ
+                    window.location.href = '/aboutme'; // เปลี่ยนเส้นทางไปยังหน้า aboutme
+                } else {
+                    alert(result.message); // แสดงข้อความเมื่อเกิดข้อผิดพลาด
+                }
             });
-            </script>
+        </script>                               
 </body>
 
 </html>
