@@ -10,6 +10,7 @@ router.get('/', async function (req, res, next) {
     res.render('aboutme', { user }); // ส่งข้อมูล user ไปยัง View
 });
 
+
 router.get('/insert', async function (req, res, next) {
     const sampleUserData = {
         email: "ngamnij" + "@kku.ac.th",
