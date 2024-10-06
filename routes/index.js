@@ -102,7 +102,6 @@ router.post('/replyComment/:id', (req, res) => {
       });
 });
 
-
 router.post('/likeComment/:id', async (req, res) => {
   try {
       const comment = await Comment.findById(req.params.id);
@@ -115,6 +114,19 @@ router.post('/likeComment/:id', async (req, res) => {
   } catch (err) {
       console.error(err);
       res.status(500).send("Error liking the comment");
+  }
+});
+
+router.get('/commentDelete/:id', async (req, res) => {
+  try {
+      const deletedComment = await Comment.findByIdAndDelete(req.params.id);
+      if (!deletedComment) {
+          return res.status(404).send('Comments not found');
+      }
+      res.redirect('/')
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error deleting the Comments');
   }
 });
 

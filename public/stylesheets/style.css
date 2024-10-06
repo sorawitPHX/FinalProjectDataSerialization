@@ -24,7 +24,9 @@
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0 !important;
 }
-
+.community {
+  margin-top: 1.5em;
+}
 .h {
   text-align: center;
   padding:0 1em .5em 1em;
@@ -61,7 +63,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .newsTitle {
-  
   max-width: 150px;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -80,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .comment-con::-webkit-scrollbar {
-  width: 4px;
+  width: 10px;
 }
 
 .comment-con::-webkit-scrollbar-track {
@@ -88,11 +89,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .comment-con::-webkit-scrollbar-thumb {
-  background: #888;
+  /* background: #888; */
 }
 
 .comment-con::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  /* background: #555; */
 }
 .comment-con {
   width: 100%;
@@ -172,7 +173,15 @@ h1, h2, h3, h4, h5, h6 {
   color: #999;
   cursor: pointer;
 }
-
+.cm-dot {
+  width: max-content;
+  position: absolute;
+  left: 10px;
+  top: -10px;
+}
+.cm-dot li {
+  margin: 0;
+}
 .reply-modal {
   height: 95vh;
 }

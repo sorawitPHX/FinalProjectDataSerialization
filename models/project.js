@@ -3,23 +3,31 @@ const mongoose = require('mongoose');
 
 // สร้าง Schema สำหรับข้อมูล
 const projectSchema = new mongoose.Schema({
-    project_name: {
-        type: String,
-        required: true,
+    position: {
+        type: Number,
     },
-    project_img_path: {
+    title: {
         type: String
     },
-    project_desc: {
+    result_id: {
         type: String
     },
-    project_link: {
+    link: {
         type: String
     },
-    added_user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    snippet: {
+        type: String
+    },
+    publication_info: {
+        type: Object
+    },
+    resources: {
+        type: Array
+    },
+    inline_links: {
+        type: Object
+    },
+    
 }, {timestamps: true});
 
 // สร้าง Model

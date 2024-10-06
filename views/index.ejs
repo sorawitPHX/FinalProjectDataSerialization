@@ -223,7 +223,7 @@
     <section id="service" class="services pt-0">
       <div class="container aos-init aos-animate" data-aos="fade-up">
         <div class="section-header">
-          <h2 class="h">ชุมชน</h2>
+          <h2 class="h community">ชุมชน</h2>
         </div>
         <div class="d-flex justify-content-end">        
         <button type="button" class="btn btn-success my-3 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#commentForm">
@@ -262,11 +262,11 @@
                         </div>
 
                         <!-- Reply Form -->
-                        <div id="replyForm-<%= comment._id %>" class="reply-form my-3" style="">
+                        <div id="replyForm-<%= comment._id %>" class="reply-form my-3">
                           <form action="/replyComment/<%= comment._id %>" method="POST">
                             <input type="hidden" name="username" value="<%= users.username %>">
                             <input type="hidden" name="Puser" value="<%= users.pImg %>">
-                            <textarea name="content" class="form-control" placeholder="write a reply..." style="height: 120px; resize: none;" required></textarea>
+                            <textarea name="content" class="form-control" placeholder="write a reply..." style="height: 100px; resize: none;" required></textarea>
                             <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-reply"></i> ตอบกลับ</button>
                           </form>
                         </div>
@@ -289,10 +289,17 @@
                               <% }); %>
                             <% } %>
                           </div>
+                          <div class="modal-footer">
+                            <button onclick="" class="btn btn-outline-warning">แก้ไข</button>
+                            <button onclick="deleteComment(['<%= comment._id %>'])" class="btn btn-outline-danger">ลบ</button>
+                            <input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="ปิด">
+                          </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+
                 <div class="comment-box">
                   <div class="comment-header">
                     <img src="<%= comment.PImg %>" alt="Profile Pic" class="profile-pic">
@@ -300,6 +307,14 @@
                       <h3><%= comment.username %></h3>
                       <span><%= comment.date.toLocaleString() %></span>
                     </div>
+                    <div class="menu-icon">
+                      <span class="toggleAction" onclick="toggleActionMenu('<%= comment._id %>')" >&#x22EE;</span>
+                      <ul class="list-group cm-dot" id="cm-<%= comment._id %>" style="display: none; z-index: 99;">
+                        <li class="list-group-item">edit</li>
+                        <li class="list-group-item" onclick="deleteComment(['<%= comment._id %>'])">delete</li>
+                      </ul>
+                    </div>
+
                   </div>
                   <div class="comment-body">
                     <div class="comment-text"><%= comment.content.substring(0, 100) %></div>
@@ -324,6 +339,8 @@
                     <span class="comment-count"><%= comment.replies.length %></span>
                   </div>
                 </div>
+
+
               <% }); %>
             <% } else { %>
               <p class="text-center">ไม่มีความคิดเห็น</p>
@@ -348,6 +365,27 @@
                 console.error('Network error:', error);
             });
         }
+        function toggleActionMenu(commentId) {
+          const ActioToggleForm = document.getElementById('cm-' + commentId);
+          ActioToggleForm.style.display = ActioToggleForm.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        function deleteComment(data) {
+                        Swal.fire({
+                            title: `ลบข้อมูลลำดับที่หรือไม่?`,
+                            text: "หากคุณลบแล้วจะไม่สามารถกู้คืนได้!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/commentDelete/' + data[0]
+                            }
+                        });
+                    }
     </script>
   </main>
 </div>
