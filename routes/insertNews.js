@@ -21,25 +21,36 @@ router.get('/', async function (req, res, next) {
     try {
         const status = req.query.status;
         const msg = req.query.msg;
+        const search = req.query.search || '';
+        const searchOptions = search
+        
+            ? {
+                $or: [
+                    { title: { $regex: search, $options: 'i' } }, // ค้นหาแบบไม่สนใจตัวพิมพ์ใหญ่เล็ก
+                    { content: { $regex: search, $options: 'i' } }
+                ]
+            }
+            : {};
 
         const page = parseInt(req.query.page) || 1;
         const limit = 5;
         const startIndex = (page - 1) * limit;
 
-        const newsList = await News.find()
+        const newsList = await News.find(searchOptions)
             .sort({ date: -1 })
             .skip(startIndex)
             .limit(limit);
 
-        const totalNews = await News.countDocuments();
+        const totalNews = await News.countDocuments(searchOptions);
         const totalPages = Math.ceil(totalNews / limit);
 
-        // ส่งข้อมูลไปยัง view
+        // ส่งข้อมูลไปยัง view รวมถึงคำค้นหา
         res.render('insertNews', {
             title: 'เพิ่มข่าวสาร',
             activePage: 'insertNews',
             status,
             msg,
+            search,
             newsList,
             currentPage: page,
             totalPages

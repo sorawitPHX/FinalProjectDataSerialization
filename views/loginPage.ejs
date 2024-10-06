@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/stylesheets/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css">
+    <title>Login Page</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin-top: 3%;
+        }
+
+        .card {
+            border-radius: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: relative;
+            height: 100%;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .form-section {
+            padding: 20px;
+        }
+
+        @media (max-width: 991px) {
+            .video-container {
+                display: none;
+            }
+        }
+
+        .pop-up-success {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="vh-100 d-flex align-items-center justify-content-center">
+        <div class="card" style="width: 80%; max-width: 800px;">
+            <div class="row g-0">
+                <!-- Video Section -->
+                <div class="col-md-4 d-none d-lg-block video-container">
+                    <video autoplay loop muted playsinline>
+                        <source src="/videos/jellyFish_verti.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <!-- Form Section -->
+                <div class="col-lg-6 d-flex align-items-center justify-content-center text-black form-section">
+                    <div class="px-5">
+                        <div class="logo mb-4">
+                            <i class="fas fa-crow fa-2x me-3" style="color: #709085;"></i>
+                            <span class="h1 fw-bold mb-0">LOGIN</span>
+                        </div>
+                        <form id="loginForm" style="width: 100%; max-width: 400px;">
+                            <div class="form-outline mb-4">
+                                <input type="email" name="email" id="form2Example18" class="form-control form-control-lg" required />
+                                <label class="form-label" for="form2Example18">Email address</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="password" name="password" id="form2Example28" class="form-control form-control-lg" required />
+                                <label class="form-label" for="form2Example28">Password</label>
+                            </div>
+
+                            <div class="form-check mb-4 remember-me-label">
+                                <input type="checkbox" name="rememberMe" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+
+                            <div class="pt-1 mb-4">
+                                <button class="btn btn-info btn-lg btn-block" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pop-up-success" id="popUpSuccess">
+        <i class="fas fa-check-circle"></i> เข้าสู่ระบบสำเร็จ!
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(loginForm);
+            const data = {
+                email: formData.get('email'),
+                password: formData.get('password'),
+                rememberMe: formData.get('rememberMe') === 'on'
+            };
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                // แสดง pop-up สำเร็จ
+                const popUp = document.getElementById('popUpSuccess');
+                popUp.style.display = 'block';
+                setTimeout(() => {
+                    popUp.style.display = 'none';
+                    window.location.href = '/';
+                }, 3000); // ซ่อนหลังจาก 3 วินาที
+            } else {
+                alert(result.message || 'เข้าสู่ระบบล้มเหลว');
+            }
+        });
+    </script>
+</body>
+
+</html>
