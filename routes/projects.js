@@ -118,6 +118,7 @@ router.get('/', async (req, res) => {
     }
 })
 
+
 router.get('/scholar/api', async (req, res) => {
     const msg = req.query.msg
     const status = req.query.status
@@ -135,6 +136,11 @@ router.get('/scholar/api', async (req, res) => {
     }
     let scholar_project = await response.json()
     res.send(scholar_project)
+})
+
+router.get('/test/project', async (req, res)=>{
+    const projects = await Project.find()
+    res.send(projects)
 })
 
 // เส้นทางสำหรับการอัปเดตข้อมูล
