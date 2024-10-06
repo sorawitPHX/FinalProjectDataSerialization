@@ -150,6 +150,35 @@ h1, h2, h3, h4, h5, h6 {
   width: 100px;
   height: 100px;
 }
+.readmore {
+  cursor: pointer;
+  text-align: center;
+  font-size: small;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 1em;
+  margin-right: 1em;
+  max-width: 100px;
+  min-width: 100px;
+  position: relative;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgb(189, 189, 189);
+  transition: .5s linear infinite;
+}
+.readmore:hover {
+  animation: animation 3s infinite;
+  background-color: rgb(184, 184, 184);
+
+}
+@keyframes animation {
+  0%   { transform: translateX(0px);}
+  50%  {transform: translateX(15px);}
+  100% {transform: translateX(0px);}
+}
+.readmore i {
+  font-size: 3em;
+}
+
 .actions {
   display: flex;
   align-items: center;
