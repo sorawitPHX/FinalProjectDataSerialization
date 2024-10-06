@@ -1,3 +1,4 @@
+@import "compass/css3";
 * {
   margin: 0;
   font-family: 'Kanit', sans-serif;
@@ -280,11 +281,16 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgb(184, 184, 184);
 
 }
+
+.post-btn {
+}
 @keyframes animation {
   0%   { transform: translateX(0px);}
   50%  {transform: translateX(15px);}
   100% {transform: translateX(0px);}
 }
+
+
 .readmore i {
   font-size: 3em;
 }
@@ -356,6 +362,7 @@ display: block;
 .comment-icon:hover {
   color: grey;
 }
+
 .no-underline {
   text-decoration: none; /* ลบเส้นใต้ */
 }

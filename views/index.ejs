@@ -227,7 +227,7 @@
         </div>
         <div class="d-flex justify-content-end">
         <button class="btn btn-secondary my-3 mx-1 d-flex align-items-center" onclick="newWindow('/comments')">อ่านเพิ่มเติม</button>
-        <button type="button" class="btn btn-success my-3 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#commentForm">
+        <button type="button" class="btn btn-success my-3 d-flex align-items-center post-btn" data-bs-toggle="modal" data-bs-target="#commentForm">
           Post <i class="bi bi-cursor-fill mx-1"></i>
         </button></div>
         <div class="row gy-4">
@@ -309,7 +309,7 @@
                       <span><%= comment.date.toLocaleString() %></span>
                     </div>
                     <div class="menu-icon">
-                      <span class="toggleAction" onclick="toggleActionMenu('<%= comment._id %>')" >&#x22EE;</span>
+                      <span class="toggleAction" onclick="toggleActionMenu('<%= comment._id %>')">&#x22EE;</span>
                       <ul class="list-group cm-dot" id="cm-<%= comment._id %>" style="display: none; z-index: 99;">
                         <li class="list-group-item">edit</li>
                         <li class="list-group-item" onclick="deleteComment(['<%= comment._id %>'])">delete</li>
@@ -369,8 +369,24 @@
             });
         }
         function toggleActionMenu(commentId) {
-          const ActioToggleForm = document.getElementById('cm-' + commentId);
-          ActioToggleForm.style.display = ActioToggleForm.style.display === 'none' ? 'block' : 'none';
+          const actionToggleForm = document.getElementById("cm-" + commentId);
+          const toggleButton = document.querySelector(`.toggleAction[onclick*="${commentId}"]`);
+
+
+          if (actionToggleForm.style.display === "none" || actionToggleForm.style.display === "") {
+            actionToggleForm.style.display = "block";
+          } else {
+            actionToggleForm.style.display = "none";
+          }
+
+          document.addEventListener('click', function (event) {
+            const isClickInsideMenu = actionToggleForm.contains(event.target);
+            const isClickOnToggleButton = toggleButton.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnToggleButton) {
+              actionToggleForm.style.display = "none";
+            }
+          });
         }
         function newWindow(data) {
           window.location.href = data
