@@ -17,7 +17,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/login', (req, res) => {
-    res.render('loginPage');
+    res.render('loginPage', {title: 'เข้าสู่ระบบ'});
 });
 
 router.get('/register', (req, res) => {

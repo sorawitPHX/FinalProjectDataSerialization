@@ -74,14 +74,15 @@
                         </div>
                         <form id="loginForm" style="width: 100%; max-width: 400px;">
                             <div class="form-floating mb-4">
-                                <input type="email" name="email" id="email"
-                                    class="form-control form-control-lg" placeholder="โปรดกรอกอีเมลของท่าน" required />
+                                <input type="email" name="email" id="email" class="form-control form-control-lg"
+                                    placeholder="โปรดกรอกอีเมลของท่าน" required />
                                 <label class="form-label" for="email">อีเมล</label>
                             </div>
 
                             <div class="form-floating mb-4">
                                 <input type="password" name="password" id="password"
-                                    class="form-control form-control-lg" placeholder="โปรดกรอกรหัสผ่านของท่าน" required />
+                                    class="form-control form-control-lg" placeholder="โปรดกรอกรหัสผ่านของท่าน"
+                                    required />
                                 <label class="form-label" for="password">รหัสผ่าน</label>
                             </div>
 
@@ -129,14 +130,27 @@
             console.log(result)
             if (result.token) {
                 // แสดง pop-up สำเร็จ
-                const popUp = document.getElementById('popUpSuccess');
-                popUp.style.display = 'block';
+                Swal.fire({
+                    title: "เข้าสู่ระบบสำเร็จ",
+                    text: '',
+                    icon: "success"
+                }).then((result) => {
+                    window.location.href = '/'
+                })
                 setTimeout(() => {
-                    popUp.style.display = 'none';
                     window.location.href = '/';
-                }, 3000); // ซ่อนหลังจาก 3 วินาที
+                }, 1000); // ซ่อนหลังจาก 3 วินาที
+                // const popUp = document.getElementById('popUpSuccess');
+                // popUp.style.display = 'block';
+                
             } else {
-                alert(result.message || 'เข้าสู่ระบบล้มเหลว');
+                Swal.fire({
+                    title: "เข้าสู่ระบบล้มเหลว",
+                    text: result.error,
+                    icon: "error"
+                }).then((result) => {
+                    
+                })
             }
         });
 
