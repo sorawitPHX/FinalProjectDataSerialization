@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage }).single('commentImg'); // รับเฉพาะไฟล์เดียวจากฟิลด์ 'commentImg'
 
-const users = { username: 'notistz', pImg: 'uploads/news/image-1728110603224.jpeg' }
+const users = { username: 'Anonymous', pImg: 'img/profile.png' }
 
 function formatLikes(likes) {
     if (likes >= 1000000) {
@@ -30,6 +30,7 @@ router.get('/', async function (req, res, next) {
         let loggedUser = undefined
         if(typeof res.locals.user !== 'undefined') {
             loggedUser = await User.findOne({ _id: res.locals.user.userId })
+            
         }
         const status = req.query.status;
         const msg = req.query.msg;

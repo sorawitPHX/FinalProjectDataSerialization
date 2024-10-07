@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   });
   const upload = multer({ storage: storage }).single('commentImg'); // รับเฉพาะไฟล์เดียวจากฟิลด์ 'commentImg'
   
-  const users = {username: 'notistz', pImg: 'uploads/news/image-1728110603224.jpeg'}
+  const users = { username: 'Anonymous', pImg: 'img/profile.png' }
 
 
 router.get('/', async function (req, res, next) {
@@ -35,7 +35,7 @@ router.get('/', async function (req, res, next) {
 
     res.render('comments', {
         // user,
-        title: 'Ngamnij Arch-int',
+        title: 'ความคิดเห็น',
         activePage: 'index',
         search,
         commentList,
