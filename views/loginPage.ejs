@@ -129,14 +129,27 @@
             console.log(result)
             if (result.token) {
                 // แสดง pop-up สำเร็จ
-                const popUp = document.getElementById('popUpSuccess');
-                popUp.style.display = 'block';
+                Swal.fire({
+                    title: "เข้าสู่ระบบสำเร็จ",
+                    text: '',
+                    icon: "success"
+                }).then((result) => {
+                    window.location.href = '/'
+                })
                 setTimeout(() => {
-                    popUp.style.display = 'none';
                     window.location.href = '/';
-                }, 3000); // ซ่อนหลังจาก 3 วินาที
+                }, 1000); // ซ่อนหลังจาก 3 วินาที
+                // const popUp = document.getElementById('popUpSuccess');
+                // popUp.style.display = 'block';
+                
             } else {
-                alert(result.message || 'เข้าสู่ระบบล้มเหลว');
+                Swal.fire({
+                    title: "เข้าสู่ระบบล้มเหลว",
+                    text: result.error,
+                    icon: "error"
+                }).then((result) => {
+                    
+                })
             }
         });
 
