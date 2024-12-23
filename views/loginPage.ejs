@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/stylesheets/login.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css">
     <title>Login Page</title>
     <style>
@@ -76,13 +76,13 @@
                             <div class="form-floating mb-4">
                                 <input type="email" name="email" id="email"
                                     class="form-control form-control-lg" placeholder="โปรดกรอกอีเมลของท่าน" required />
-                                <label class="form-label" for="email">อีเมล*</label>
+                                <label class="form-label" for="email">อีเมล</label>
                             </div>
 
                             <div class="form-floating mb-4">
                                 <input type="password" name="password" id="password"
                                     class="form-control form-control-lg" placeholder="โปรดกรอกรหัสผ่านของท่าน" required />
-                                <label class="form-label" for="password">รหัสผ่าน*</label>
+                                <label class="form-label" for="password">รหัสผ่าน</label>
                             </div>
 
                             <div class="form-check mb-4 remember-me-label">
@@ -106,9 +106,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
     <script>
+        // ดักจับการส่งฟอร์มเมื่อผู้ใช้กดปุ่ม "submit"
         const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
+            event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ (reload หน้าเว็บ)
 
             const formData = new FormData(loginForm);
             const data = {
@@ -117,35 +118,40 @@
                 // rememberMe: formData.get('rememberMe') === 'on'
             };
 
+            // ส่งข้อมูลไปยัง API '/auth/login' ด้วยวิธี POST
             const response = await fetch('/auth/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json', // บอกเซิร์ฟเวอร์ว่าเนื้อหาของข้อมูลที่ส่งคือ JSON
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(data), // แปลงข้อมูลที่ได้จากฟอร์มให้เป็น JSON และส่งไปใน body ของ request
             });
 
+            // รับข้อมูลผลลัพธ์จากการตอบสนองของเซิร์ฟเวอร์
             const result = await response.json();
             console.log(result)
+
+            // ตรวจสอบว่าเซิร์ฟเวอร์ส่ง token กลับมาแสดงว่าล็อกอินสำเร็จ
             if (result.token) {
-                // แสดง pop-up สำเร็จ
+                // แสดง pop-up สำเร็จด้วย SweetAlert2
                 Swal.fire({
                     title: "เข้าสู่ระบบสำเร็จ",
                     text: '',
                     icon: "success"
                 }).then((result) => {
-                    window.location.href = '/'
+                    window.location.href = '/' // เปลี่ยนเส้นทางไปที่หน้าแรกหลังจากล็อกอินสำเร็จ
                 })
                 setTimeout(() => {
-                    window.location.href = '/';
-                }, 1000); // ซ่อนหลังจาก 3 วินาที
+                    window.location.href = '/'; // กรณีที่ผู้ใช้ไม่ตอบ pop-up จะเปลี่ยนเส้นทางหลัง 2 วินาที
+                }, 2000); // ซ่อนหลังจาก 2 วินาที
                 // const popUp = document.getElementById('popUpSuccess');
                 // popUp.style.display = 'block';
                 
             } else {
+                // ถ้าล็อกอินล้มเหลวแสดง pop-up แจ้งเตือนด้วย SweetAlert2
                 Swal.fire({
                     title: "เข้าสู่ระบบล้มเหลว",
-                    text: result.error,
+                    text: result.error, // แสดงข้อความ error ที่ได้จากเซิร์ฟเวอร์
                     icon: "error"
                 }).then((result) => {
                     
@@ -153,22 +159,24 @@
             }
         });
 
+        // เมื่อโหลดหน้าเว็บตรวจสอบว่า 'remember me' ถูกเลือกไว้ก่อนหน้านี้หรือไม่
         document.addEventListener("DOMContentLoaded", () => {
             // ตรวจสอบว่า remember me เปิดอยู่หรือไม่ ถ้าใช่ให้ auto fill email/password
             const emailField = document.getElementById("email");
             const passwordField = document.getElementById("password");
             const rememberMeCheckbox = document.getElementById("rememberMe");
 
-            // โหลดค่าจาก Local Storage ถ้ามี
+            // โหลดค่าจาก Local Storage มาแสดงที่ฟอร์มถ้ามี remember me
             if (localStorage.getItem("rememberMe") === "true") {
                 emailField.value = localStorage.getItem("email");
                 passwordField.value = localStorage.getItem("password");
                 rememberMeCheckbox.checked = true;
             }
 
-            // เมื่อคลิกปุ่ม Submit เก็บค่าลง Local Storage
+            // เมื่อฟอร์มถูกส่ง ให้จัดการข้อมูล remember me
             document.getElementById("loginForm").addEventListener("submit", () => {
                 if (rememberMeCheckbox.checked) {
+                    // ถ้าเลือก remember me, เก็บข้อมูลลงใน Local Storage
                     localStorage.setItem("email", emailField.value);
                     localStorage.setItem("password", passwordField.value);
                     localStorage.setItem("rememberMe", "true");

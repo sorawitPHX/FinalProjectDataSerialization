@@ -1,8 +1,8 @@
 const express = require('express'); // ใช้ Express.js เพื่อสร้างเซิร์ฟเวอร์ HTTP และจัดการการร้องขอจากฝั่งผู้ใช้
 const bcrypt = require('bcrypt'); // ใช้สำหรับการเข้ารหัสรหัสผ่านเพื่อให้รหัสผ่านที่เก็บไว้ในระบบปลอดภัย
 const session = require('express-session'); // ใช้ session ในการจัดการ session ของผู้ใช้
-const router = express.Router();
-const User = require('../models/User')
+const router = express.Router(); // ใช้ router ของ Express เพื่อแยกจัดการเส้นทาง (routes) ของ API
+const User = require('../models/User') // เรียกใช้โมเดลผู้ใช้จาก database (แต่ในที่นี้ยังไม่ได้ใช้จริง)
 
 router.use(express.json()); // เพิ่ม middleware นี้เพื่อตรวจสอบการรับ JSON
 
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
     res.render('loginPage', { error: null });
 });
 
-// POST Login
+// POST Login เช็คการเข้าสู่ระบบ
 router.post('/', async (req, res) => {
     const { email, password, rememberMe } = req.body;
 
